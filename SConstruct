@@ -17,7 +17,7 @@ if (platform.system() == 'Windows'):
     print("Using compiler", compiler)
     if (len(compiler) > 0):
         env = DefaultEnvironment(tools = [compiler],
-                                 ENV = {'PATH' : os.environ['PATH'],
+                                 ENV = {'PATH' : ['C:/msys64/mingw64/bin'],  #'PATH' : os.environ['PATH'],
                                         'TMP' : os.environ['TMP'],
                                         'TEMP' : os.environ['TEMP']})
         
@@ -46,12 +46,28 @@ fftw_lib_path = []
 
 # Windows specific library settings.
 if (platform.system() == 'Windows'):
+    fftw_lib = 'libfftw3-3'
     fftw_lib = 'fftw3-3'
     conf = Configure(env)
     if not conf.CheckLib(fftw_lib):
         print("FFTW3 library not found, using storm-control version.")
         fftw_lib_path = ['#/storm_control/c_libraries/']        
 
+################################################
+# print("###### BEFORE ######")
+# print(env["LIBSUFFIX"])
+# print(env["SHLIBSUFFIX"])
+# print(env["LIBSUFFIXES"])
+# print(env["CC"])
+
+# env = Environment(
+#                     LIBS=[fftw_lib,'-lm'], 
+#                     LIBPATH = fftw_lib_path, 
+#                     CPPPATH = fftw_lib_path
+#                     )
+
+
+################################################
 
 # hal4000/halLib/c_image_manipulation.
 if True:

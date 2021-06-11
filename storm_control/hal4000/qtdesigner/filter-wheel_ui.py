@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'illumination.ui'
+# Form implementation generated from reading ui file 'filter-wheel.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
@@ -11,26 +11,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(482, 315)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
-        Dialog.setSizePolicy(sizePolicy)
-        Dialog.setMinimumSize(QtCore.QSize(0, 0))
-        Dialog.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        Dialog.resize(396, 132)
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.powerControlBox = QtWidgets.QGroupBox(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        self.filtersGroupBox = QtWidgets.QGroupBox(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.powerControlBox.sizePolicy().hasHeightForWidth())
-        self.powerControlBox.setSizePolicy(sizePolicy)
-        self.powerControlBox.setObjectName("powerControlBox")
-        self.verticalLayout.addWidget(self.powerControlBox)
+        sizePolicy.setHeightForWidth(self.filtersGroupBox.sizePolicy().hasHeightForWidth())
+        self.filtersGroupBox.setSizePolicy(sizePolicy)
+        self.filtersGroupBox.setObjectName("filtersGroupBox")
+        self.verticalLayout.addWidget(self.filtersGroupBox)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setSpacing(2)
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
@@ -44,8 +36,8 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "HAL-4000 Illumination"))
-        self.powerControlBox.setTitle(_translate("Dialog", "Power Control"))
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.filtersGroupBox.setTitle(_translate("Dialog", "Filters"))
         self.okButton.setText(_translate("Dialog", "Ok"))
 
 

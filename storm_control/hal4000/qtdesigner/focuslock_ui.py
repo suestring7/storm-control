@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'focuslock.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -127,4 +127,14 @@ class Ui_Dialog(object):
         self.jumpPButton.setText(_translate("Dialog", "Jump (+)"))
         self.jumpNButton.setText(_translate("Dialog", "Jump (-)"))
         self.okButton.setText(_translate("Dialog", "Ok"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Dialog = QtWidgets.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
 

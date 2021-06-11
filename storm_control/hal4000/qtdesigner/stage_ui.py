@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'stage.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -278,4 +278,14 @@ class Ui_Dialog(object):
         self.ymoveLabel.setText(_translate("Dialog", "Y (um):"))
         self.goButton.setText(_translate("Dialog", "Go"))
         self.okButton.setText(_translate("Dialog", "Ok"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Dialog = QtWidgets.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
 

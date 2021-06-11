@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'progression.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -31,7 +31,6 @@ class Ui_Dialog(object):
         self.linearTab = QtWidgets.QWidget()
         self.linearTab.setObjectName("linearTab")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.linearTab)
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.channelLabel = QtWidgets.QLabel(self.linearTab)
         self.channelLabel.setObjectName("channelLabel")
@@ -52,7 +51,6 @@ class Ui_Dialog(object):
         self.expTab = QtWidgets.QWidget()
         self.expTab.setObjectName("expTab")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.expTab)
-        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.channelLabel_2 = QtWidgets.QLabel(self.expTab)
         self.channelLabel_2.setObjectName("channelLabel_2")
@@ -73,7 +71,6 @@ class Ui_Dialog(object):
         self.fileTab = QtWidgets.QWidget()
         self.fileTab.setObjectName("fileTab")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.fileTab)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.powerLabel = QtWidgets.QLabel(self.fileTab)
         self.powerLabel.setObjectName("powerLabel")
@@ -139,4 +136,14 @@ class Ui_Dialog(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.fileTab), _translate("Dialog", "From File"))
         self.progressionsCheckBox.setText(_translate("Dialog", "Use Power Progressions"))
         self.okButton.setText(_translate("Dialog", "Ok"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Dialog = QtWidgets.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
 

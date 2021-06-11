@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'galvo.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -124,4 +124,14 @@ class Ui_Dialog(object):
         self.yFrequencyLabel.setText(_translate("Dialog", "Frequency (Hz)"))
         self.activateButton.setText(_translate("Dialog", "Activate"))
         self.okButton.setText(_translate("Dialog", "Ok"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Dialog = QtWidgets.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
 

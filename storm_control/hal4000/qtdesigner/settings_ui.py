@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'settings.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -37,3 +37,13 @@ class Ui_GroupBox(object):
         GroupBox.setTitle(_translate("GroupBox", "Settings"))
 
 from storm_control.hal4000.settings.parametersListView import ParametersMVC
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    GroupBox = QtWidgets.QGroupBox()
+    ui = Ui_GroupBox()
+    ui.setupUi(GroupBox)
+    GroupBox.show()
+    sys.exit(app.exec_())
+

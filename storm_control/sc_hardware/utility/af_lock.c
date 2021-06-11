@@ -8,7 +8,11 @@
  * Hazen 9/19
  */
 
-/* Include */
+/* Include 
+ * Add cmath to solve the m_pi issue
+ */
+#define _USE_MATH_DEFINES
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
