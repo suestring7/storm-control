@@ -102,11 +102,11 @@ if True:
 #
 # May need some adjustment depending on what library you have & your directory layout.
 #
-if False:
-    spin_inc_path = "C:/Program Files/Point Grey Research/Spinnaker/include/spinc"
-    spin_lib_path = "C:/Program Files/Point Grey Research/Spinnaker/bin64/vs2013"
+if True:
+    spin_inc_path = "C:/Program Files/FLIR Systems/Spinnaker/include/spinc"
+    spin_lib_path = "C:/Program Files/FLIR Systems/Spinnaker/bin64/vs2015"
     Default(env.SharedLibrary('./storm_control/c_libraries/spinshim',
-                              ['./storm_control/sc_hardware/pointGrey/spinshim.c'],
-                              LIBS = ["SpinnakerC_v120"],
+                              ['./storm_control/sc_hardware/pointGrey/nspinshim.c'],
+                              LIBS = ["SpinnakerC_v140"],
                               LIBPATH = spin_lib_path,
                               CPPPATH = spin_inc_path))
