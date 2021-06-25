@@ -271,10 +271,22 @@ class AndorCameraControl(cameraControl.HWCameraControl):
 
                 elif (pname == "emccd_gain"):
                     self.camera.setEMCCDGain(parameters.get("emccd_gain"))
+                    # Yuan: testing
+                    print("EMCCD_GAIN "+str(parameters.get("emccd_gain")))
 
                 elif (pname == "emgainmode"):
                     self.camera.setEMGainMode(parameters.get("emgainmode"))
+                    print(parameters.get("emgainmode"))
                     [gain_low, gain_high] = self.camera.getEMGainRange()
+                    #Yuan: test [1,213]
+                    print(self.camera.getEMGainRange())
+
+                    # for x in range(3):
+                    #     self.camera.setEMGainMode(x)
+                    #     [gain_low, gain_high] = self.camera.getEMGainRange()
+                    #     #Yuan: test [1,213]
+                    #     print(self.camera.getEMGainRange())
+
                     prop = self.parameters.getp("emccd_gain")
                     prop.setMinimum(gain_low)
                     prop.setMaximum(gain_high)
@@ -299,6 +311,8 @@ class AndorCameraControl(cameraControl.HWCameraControl):
 
                 elif (pname == "preampgain"):
                     self.camera.setPreAmpGain(parameters.get("preampgain"))
+                    # Yuan: test 0?
+                    #print(parameters.get("preampgain"))
 
                 elif (pname == "temperature"):
                     self.camera.setTemperature(parameters.get("temperature"))

@@ -12,18 +12,18 @@ python -m PyQt5.uic.pyuic -x z-stage.ui -o try.py
 ## I hate cmd.exe, how come there's no one get a shell that wrap it to a bash?
 ## I found it: WSL!!! but i need admin to allow that feature in this computer... Keep waiting!
 
-#took me almost an hour to get the following line work =-=
+# took me almost an hour to get the following line work =-=
 
  FOR /f "tokens=*" %G IN ('dir /b stage.ui') DO ( set ui=%G & set py=%ui:.py=_ui.py% & python -m PyQt5.uic.pyuic -x %G -o %py%)
 
-#still wrong :)
+# still wrong :)
 
-#a work around:
-FOR /f "tokens=*" %G IN ('dir /b stage.ui') DO ( set ui=%G & set py=%ui:.py=_ui.py% & python -m PyQt5.uic.pyuic -x %ui% -o %py%)
+# a work around:
+ FOR /f "tokens=*" %G IN ('dir /b stage.ui') DO ( set ui=%G & set py=%ui:.py=_ui.py% & python -m PyQt5.uic.pyuic -x %ui% -o %py%)
 
-#it's so ridiculous that I wasted so much time here
+# it's so ridiculous that I wasted so much time here
 
-FOR /f "tokens=*" %G IN ('dir /b stage.ui') DO ( echo %~G_ui.py )
+ FOR /f "tokens=*" %G IN ('dir /b stage.ui') DO ( echo %~G_ui.py )
 
 # what an idiot i am, powershell and cmd.exe are two different things:)
 
@@ -97,3 +97,25 @@ run cmake --build .
 # It does work now!
 
 06/07/2021
+
+
+```
+import PyDAQmx
+from PyDAQmx import Task
+import numpy as np
+
+
+data = np.array([0,1,1,0,1,0,1,0], dtype=np.uint8)
+data = np.array([0,0,0,0,0,0,0,0,0], dtype=np.uint8)
+
+data = np.array([0,1,1,0,1,0,1,0], dtype=np.uint8)
+
+
+data = np.array([0,1,0,0,0,0,1,0,1], dtype=np.uint8)
+task = Task()
+task.CreateDOChan("/Dev1/port0/line8:16","",PyDAQmx.DAQmx_Val_ChanForAllLines)
+task.StartTask()
+task.WriteDigitalLines(1,1,10.0,PyDAQmx.DAQmx_Val_GroupByChannel,data,None,None)
+task.StopTask()
+
+```

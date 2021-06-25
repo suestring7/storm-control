@@ -9,7 +9,7 @@ import time
 from PyQt5 import QtCore
 
 import storm_control.sc_hardware.utility.af_lock_c as afLC
-import storm_control.sc_hardware.utility.sa_lock_peak_finder as slpf
+import storm_control.sc_hardware.utility.np_lock_peak_finder as nlpf
 
 import storm_control.sc_hardware.pointGrey.spinnaker as spinnaker
 
@@ -49,16 +49,26 @@ class LockCamera(QtCore.QThread):
 
         # In order to turn off pixel defect correction the camera has
         # to be in video mode 0.
-        self.camera.setProperty("VideoMode", "Mode0")
-        self.camera.setProperty("pgrDefectPixelCorrectionEnable", False)
+        # Yuan: this property is not included in our version, thus we need to use the property "DefectCorrectStaticEnable"
+        if self.camera.hasProperty("VideoMode"):
+            self.camera.setProperty("VideoMode", "Mode0")
+
+        if self.camera.hasProperty("pgrDefectCorrectStaticEnable"):
+            self.camera.setProperty("pgrDefectPixelCorrectionEnable", False)
+    
+        self.camera.setProperty("DefectCorrectStaticEnable", False)
         
         # Set pixel format.
         self.camera.setProperty("PixelFormat", "Mono16")
 
-        self.camera.setProperty("VideoMode", parameters.get("video_mode"))
-                
+        self.camera.setProperty("DefectCorrectStaticEnable", parameters.get("DCS_mode"))
+        
+        #self.camera.setProperty("VideoMode", parameters.get("video_mode"))
+        
         # We don't want any of these 'features'.
-        self.camera.setProperty("AcquisitionFrameRateAuto", "Off")
+        if self.camera.hasProperty("AcquisitionFrameRateAuto"):
+            self.camera.setProperty("AcquisitionFrameRateAuto", "Off")
+
         self.camera.setProperty("ExposureAuto", "Off")
         self.camera.setProperty("GainAuto", "Off")        
 
@@ -78,8 +88,8 @@ class LockCamera(QtCore.QThread):
         # No idea what this means in the context of a black and white
         # camera. We try and turn it off but that seems to be much
         # harder to do than one would hope.
-        #
-        self.camera.setProperty("OnBoardColorProcessEnabled", False)
+        # Yuan: We don't have this now.
+        #self.camera.setProperty("OnBoardColorProcessEnabled", False)
 
         # Verify that we have turned off some of these 'features'.
         for feature in ["pgrDefectPixelCorrectionEnable",
@@ -96,8 +106,9 @@ class LockCamera(QtCore.QThread):
         # Configure acquisition parameters.
         #
         # Note: The order is important here.
-        #
-        for pname in ["BlackLevel", "Gain", "Height", "Width", "OffsetX", "OffsetY", "AcquisitionFrameRate"]:
+        # Yuan: weird that we don't have offsetX,Y range for our camera
+        #for pname in ["BlackLevel", "Gain", "Height", "Width", "OffsetX", "OffsetY", "AcquisitionFrameRate"]:
+        for pname in ["BlackLevel", "Gain", "Height", "Width", "AcquisitionFrameRate"]:
             self.camera.setProperty(pname, parameters.get(pname))
 
         # Use maximum exposure time allowed by desired frame rate.
@@ -105,7 +116,7 @@ class LockCamera(QtCore.QThread):
         self.camera.setProperty("ExposureTime", self.camera.getProperty("ExposureTime").getMaximum())
 
         # Get current offsets.
-        #
+        # Yuan: For our Blackfly S, we can't adjust the Offset value???
         self.cur_offsetx = self.camera.getProperty("OffsetX").getValue()
         self.cur_offsety = self.camera.getProperty("OffsetY").getValue()
         self.old_offsetx = self.cur_offsetx
@@ -297,7 +308,7 @@ class SSLockCamera(LockCamera):
         self.x_off = numpy.zeros(self.reps)
         self.y_off = numpy.zeros(self.reps)
 
-        self.lpf = slpf.LockPeakFinder(offset = 0,
+        self.lpf = nlpf.LockPeakFinder(offset = 0,
                                        sigma = parameters.get("sigma"),
                                        threshold = parameters.get("threshold"))
 
