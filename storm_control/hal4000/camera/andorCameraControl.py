@@ -75,6 +75,7 @@ class AndorCameraControl(cameraControl.HWCameraControl):
         self.parameters.setv("max_intensity", self.camera.getMaxIntensity())
 
         [gain_low, gain_high] = self.camera.getEMGainRange()
+        #print(gain_low,gain_high)
         self.parameters.add("emccd_gain", params.ParameterRangeInt(description = "EMCCD Gain",
                                                                    name = "emccd_gain",
                                                                    value = gain_low, 
@@ -129,7 +130,7 @@ class AndorCameraControl(cameraControl.HWCameraControl):
                                                      value = vs_speeds[-1], 
                                                      allowed = vs_speeds))
 
-#        self.parameters.getp("exposure_time").setMaximum(self.camera.getMaxExposure())
+       #self.parameters.getp("exposure_time").setMaximum(self.camera.getMaxExposure())
 
         self.parameters.getp("exposure_time").setOrder(2)
         self.parameters.setv("exposure_time", 0.0)
@@ -146,10 +147,12 @@ class AndorCameraControl(cameraControl.HWCameraControl):
                                                    value = 0, 
                                                    allowed = ad_channels))
 
+        # 3: Real mode  2: Linear mode  1: DAC mode  0: default DAC mode
+        # Yuan: set default to 3
         n_modes = list(range(self.camera.getNumberEMGainModes()))
         self.parameters.add(params.ParameterSetInt(description = "EMCCD gain mode",
                                                    name = "emgainmode",
-                                                   value = 0, 
+                                                   value = 3, 
                                                    allowed = n_modes))
 
         self.parameters.add(params.ParameterSetBoolean(description = "Baseline clamp",
@@ -271,23 +274,12 @@ class AndorCameraControl(cameraControl.HWCameraControl):
 
                 elif (pname == "emccd_gain"):
                     self.camera.setEMCCDGain(parameters.get("emccd_gain"))
-                    # Yuan: testing
-                    print("EMCCD_GAIN "+str(parameters.get("emccd_gain")))
 
                 elif (pname == "emgainmode"):
                     self.camera.setEMGainMode(parameters.get("emgainmode"))
-                    print(parameters.get("emgainmode"))
-                    [gain_low, gain_high] = self.camera.getEMGainRange()
-                    #Yuan: test [1,213]
-                    print(self.camera.getEMGainRange())
-
-                    # for x in range(3):
-                    #     self.camera.setEMGainMode(x)
-                    #     [gain_low, gain_high] = self.camera.getEMGainRange()
-                    #     #Yuan: test [1,213]
-                    #     print(self.camera.getEMGainRange())
-
                     prop = self.parameters.getp("emccd_gain")
+                    # YT: weird that I need to add the following line
+                    [gain_low, gain_high] = self.camera.getEMGainRange()
                     prop.setMinimum(gain_low)
                     prop.setMaximum(gain_high)
 
@@ -311,8 +303,6 @@ class AndorCameraControl(cameraControl.HWCameraControl):
 
                 elif (pname == "preampgain"):
                     self.camera.setPreAmpGain(parameters.get("preampgain"))
-                    # Yuan: test 0?
-                    #print(parameters.get("preampgain"))
 
                 elif (pname == "temperature"):
                     self.camera.setTemperature(parameters.get("temperature"))

@@ -168,7 +168,7 @@
 					  <!-- These can be changed / editted. -->
 					  
 						<emccd_gain type="int">70</emccd_gain>
-						<emgainmode type="int">0</emgainmode>
+						<emgainmode type="int">2</emgainmode>
 	    			<exposure_time type="float">0.1</exposure_time>
 	    			<preampgain type="float">3.0</preampgain>
     				

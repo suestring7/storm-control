@@ -27,6 +27,7 @@ class LDCIRLaserAdjustableFunctionality(amplitudeModule.AmplitudeFunctionality):
     
     def output(self, power):
         duty_cycle = (power - self.minimum)*self.scale
+        #print(duty_cycle)
         self.ct_task.pwmOutput(duty_cycle = duty_cycle)
 
 

@@ -218,6 +218,9 @@ class AFLockC(object):
         if self.afld is None:
             self.initialize(image1)
 
+        print(self.im_x, self.im_y)
+        print(image1.shape)
+        print(image2.shape)
         assert (image1.shape[0] == self.im_x)
         assert (image1.shape[1] == self.im_y)
         assert (image2.shape[0] == self.im_x)

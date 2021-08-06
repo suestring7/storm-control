@@ -260,7 +260,7 @@ class Stage(halModule.HalModule):
     def handleResponse(self, message, response):
         if message.isType("get functionality"):
             self.view.setStageFunctionality(response.getData()["functionality"])
-            
+
     def processMessage(self, message):
 
         if message.isType("change directory"):

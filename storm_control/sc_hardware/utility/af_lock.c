@@ -511,6 +511,7 @@ int aflGetVector(afLockData *afld, double *vec, int which)
  * x_size - image size (fast axis), should be a power of 2.
  * downsample - downsampling factor, should divide sx and sy.
  */
+// Yuan: switched x_size, y_size as we need // TEST
 afLockData *aflInitialize(int y_size, int x_size, int downsample)
 {
   int i;
@@ -749,9 +750,9 @@ void aflNewImageStep2(afLockData *afld)
     for(j=0;j<afld->x_size;j++){
       k = i*afld->x_size+j;
       if(afld->fft_vector[k] > m){
-	m = afld->fft_vector[k];
-	m_i = i;
-	m_j = j;
+      	m = afld->fft_vector[k];
+      	m_i = i;
+      	m_j = j;
       }
     }
   }

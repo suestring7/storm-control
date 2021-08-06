@@ -44,9 +44,9 @@
       <module_name type="string">storm_control.hal4000.display.display</module_name>
       <parameters>
 
-	<!-- The default color table. Other options are in hal4000/colorTables/all_tables -->
-	<colortable type="string">idl5.ctbl</colortable>
-	
+			<!-- The default color table. Other options are in hal4000/colorTables/all_tables -->
+			<colortable type="string">idl5.ctbl</colortable>
+			
       </parameters>
     </display>
     
@@ -63,7 +63,7 @@
 
       <!-- Film parameters specific to this setup go here. -->
       <parameters>
-	<extension desc="Movie file name extension" type="string" values=",Red,Green,Blue"></extension>
+				<extension desc="Movie file name extension" type="string" values=",Red,Green,Blue"></extension>
       </parameters>
     </film>
 
@@ -382,25 +382,25 @@
       <class_name type="string">NoneQPDModule</class_name>
 
       <configuration>
-	<parameters>
-	  <max_voltage type="float">10.0</max_voltage>
-	  <min_voltage type="float">-10.0</min_voltage>
-	  <offset_has_center_bar type="boolean">True</offset_has_center_bar>
-	  <offset_maximum type="float">0.6</offset_maximum>
-	  <offset_minimum type="float">-0.6</offset_minimum>
-	  <offset_warning_high type="float">0.5</offset_warning_high>
-	  <offset_warning_low type="float">-0.5</offset_warning_low>
-	  <sum_maximum type="float">1000.0</sum_maximum>
-	  <sum_minimum type="float">0.0</sum_minimum>
-	  <sum_warning_low type="float">100.0</sum_warning_low>
-	</parameters>
-	<units_to_microns type="float">1.0</units_to_microns>
+				<parameters>
+				  <max_voltage type="float">10.0</max_voltage>
+				  <min_voltage type="float">-10.0</min_voltage>
+				  <offset_has_center_bar type="boolean">True</offset_has_center_bar>
+				  <offset_maximum type="float">0.6</offset_maximum>
+				  <offset_minimum type="float">-0.6</offset_minimum>
+				  <offset_warning_high type="float">0.5</offset_warning_high>
+				  <offset_warning_low type="float">-0.5</offset_warning_low>
+				  <sum_maximum type="float">1000.0</sum_maximum>
+				  <sum_minimum type="float">0.0</sum_minimum>
+				  <sum_warning_low type="float">100.0</sum_warning_low>
+				</parameters>
+				<units_to_microns type="float">1.0</units_to_microns>
 
-	<!-- These are for simulation / testing -->
-	<noise type="float">0.5e-2</noise>
-	<tilt type="float">1.0e-3</tilt>
-	<xy_stage_fn type="string">none_stage</xy_stage_fn>
-	<z_stage_fn type="string">none_zstage</z_stage_fn>
+				<!-- These are for simulation / testing -->
+				<noise type="float">0.5e-2</noise>
+				<tilt type="float">1.0e-3</tilt>
+				<xy_stage_fn type="string">none_stage</xy_stage_fn>
+				<z_stage_fn type="string">none_zstage</z_stage_fn>
       </configuration>
     </none_qpd>
 

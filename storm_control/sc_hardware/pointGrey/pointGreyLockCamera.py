@@ -46,6 +46,7 @@ class LockCamera(QtCore.QThread):
 
         # Get the camera & set some defaults.
         self.camera = spinnaker.getCamera(camera_id)
+        print(f'self.camera = { self.camera}')
 
         # In order to turn off pixel defect correction the camera has
         # to be in video mode 0.
@@ -59,9 +60,10 @@ class LockCamera(QtCore.QThread):
         self.camera.setProperty("DefectCorrectStaticEnable", False)
         
         # Set pixel format.
-        self.camera.setProperty("PixelFormat", "Mono16")
+        self.camera.setProperty("PixelFormat", parameters.get("PixelFormat"))
 
-        self.camera.setProperty("DefectCorrectStaticEnable", parameters.get("DCS_mode"))
+        # YUAN
+        #self.camera.setProperty("DefectCorrectStaticEnable", parameters.get("DCS_mode"))
         
         #self.camera.setProperty("VideoMode", parameters.get("video_mode"))
         
@@ -69,6 +71,7 @@ class LockCamera(QtCore.QThread):
         if self.camera.hasProperty("AcquisitionFrameRateAuto"):
             self.camera.setProperty("AcquisitionFrameRateAuto", "Off")
 
+        self.camera.setProperty("AcquisitionMode", "Continuous")
         self.camera.setProperty("ExposureAuto", "Off")
         self.camera.setProperty("GainAuto", "Off")        
 
@@ -107,13 +110,14 @@ class LockCamera(QtCore.QThread):
         #
         # Note: The order is important here.
         # Yuan: weird that we don't have offsetX,Y range for our camera
-        #for pname in ["BlackLevel", "Gain", "Height", "Width", "OffsetX", "OffsetY", "AcquisitionFrameRate"]:
-        for pname in ["BlackLevel", "Gain", "Height", "Width", "AcquisitionFrameRate"]:
+        for pname in ["BlackLevel", "Gain", "Height", "Width", "OffsetX", "OffsetY", "AcquisitionFrameRate"]:
+        #for pname in ["BlackLevel", "Gain", "Height", "Width", "AcquisitionFrameRate"]:
             self.camera.setProperty(pname, parameters.get(pname))
 
         # Use maximum exposure time allowed by desired frame rate.
         #
-        self.camera.setProperty("ExposureTime", self.camera.getProperty("ExposureTime").getMaximum())
+        #self.camera.setProperty("ExposureTime", self.camera.getProperty("ExposureTime").getMaximum())
+        self.camera.setProperty("ExposureTime", 20000.0)
 
         # Get current offsets.
         # Yuan: For our Blackfly S, we can't adjust the Offset value???
@@ -154,6 +158,7 @@ class LockCamera(QtCore.QThread):
         self.running = True
         while(self.running):
             [frames, frame_size] = self.camera.getFrames()
+            # Yuan: the frame_size is set by Width x Height
             self.analyze(frames, frame_size)
 
             # Check for AOI change.
@@ -215,7 +220,6 @@ class AFLockCamera(LockCamera):
 
         t2 = list(map(int, parameters.get("roi2").split(",")))
         self.roi2 = (slice(t2[0], t2[1]), slice(t2[2], t2[3]))
-
         self.afc = afLC.AFLockC(offset = parameters.get("background"),
                                 downsample = parameters.get("downsample"))
 
@@ -227,7 +231,18 @@ class AFLockCamera(LockCamera):
         self.params_mutex.unlock()
 
     def analyze(self, frames, frame_size):
-
+        # testing inputs
+        # frame_size = (1440,1080)
+        # the frames list has class objects inside, specifically:
+        # <class 'storm_control.sc_hardware.pointGrey.spinnaker.ScamData>
+        if False:
+            print('\n\n--------------- \ndef analyze\n--------------------')
+            print(f'type(frames)= {type(frames)}')
+            print(f'len(frames)= {len(frames)}')
+            if len(frames)> 0:
+                print(f'type(frames[0]) = { type(frames[0])}')
+            print(f'type(frame_size) = {type(frame_size)}')
+            print(f'frame_size = {frame_size}')
         # Only keep the last max_backlog frames if we are falling behind.
         lf = len(frames)
         if (lf>self.max_backlog):
@@ -236,10 +251,46 @@ class AFLockCamera(LockCamera):
             
         for elt in frames:
             self.n_analyzed += 1
+            # YUAN: test follow what they did...
+            if False:
+                # testing what happens without the reshapping
+                print('saving frame_test1.npy ...')
+                frame_test1 = elt.getData().reshape(frame_size)
+                numpy.save(r'C:\Users\yxt5273\Desktop\focus_lock_debugging\frame_test1.npy',frame_test1)
+            
+                # or reshapping using the inverted x and Y direction
+                print('saving frame_test2.npy ...')
+                frame_test2 = elt.getData().reshape((frame_size[1],frame_size[0]))
+                numpy.save(r'C:\Users\yxt5273\Desktop\focus_lock_debugging\frame_test2.npy',frame_test2)
 
-            frame = elt.getData().reshape(frame_size)
+            # Not sure why, but the dimensions are swapped
+            #frame = elt.getData().reshape(frame_size)
+            frame = elt.getData().reshape((frame_size[1],frame_size[0]))
+
             image1 = frame[self.roi1]
             image2 = frame[self.roi2]
+
+            # Yuan: Debugging ROI shape issues
+            if False:
+                print('\n\n------------------------\nDebugging ROI shape issues')
+                print(f'self.roi1 = {self.roi1}')
+                print(f'self.roi2 = {self.roi2}')
+                print(f'frame.shape = {frame.shape}')
+                print(f'image1.shape = {image1.shape}')
+                print(f'image2.shape = {image2.shape}')
+                print(f'image1.dtype = {image1.dtype}')
+                print(f'image2.dtype = {image2.dtype}')
+                print('------------------------\n\n')
+
+
+            # Debugging image1 and image2 into findOffsetU16NM
+            if False:
+                # testing what happens without the reshapping
+                print('saving image1.npy and image2.npy...')
+                numpy.save(r'C:\Users\yxt5273\Desktop\focus_lock_debugging\image1.npy',image1)
+                numpy.save(r'C:\Users\yxt5273\Desktop\focus_lock_debugging\image2.npy',image2)
+
+            # This is the offending line
             [x_off, y_off, success, mag] = self.afc.findOffsetU16NM(image1, image2, verbose = False)
 
             #self.bg_est[self.cnt] = frame[0,0]
@@ -252,8 +303,16 @@ class AFLockCamera(LockCamera):
             self.cnt += 1
             if (self.cnt == self.reps):
 
-                # Convert current frame to 8 bit image.
-                image = numpy.right_shift(frame, 3).astype(numpy.uint8)
+                # Convert current frame to 8 bit image. ???
+                #image = numpy.right_shift(frame, 3).astype(numpy.uint8)
+                image = numpy.right_shift(frame, 4).astype(numpy.uint8) #convert from 16 bit
+                
+                #debugging save image to check how it looks.
+                # result: frame and image are already scrambled.
+                #Yuan
+                if False:
+                    numpy.save(r'C:\Users\yxt5273\Desktop\focus_lock_debugging\image.npy',image)
+                    numpy.save(r'C:\Users\yxt5273\Desktop\focus_lock_debugging\frame.npy',frame)
                 
                 qpd_dict = {"is_good" : True,
                             "image" : image,
@@ -261,10 +320,11 @@ class AFLockCamera(LockCamera):
                             "sum" : 0.0,
                             "x_off" : 0.0,
                             "y_off" : 0.0}
-                            
+
                 if (numpy.count_nonzero(self.good) < self.min_good):
                     qpd_dict["is_good"] = False
                     self.cameraUpdate.emit(qpd_dict)
+                    print("Not good")
                 else:
                     mag = numpy.mean(self.mag[self.good])
                     y_off = numpy.mean(self.y_off[self.good]) - self.zero_dist
@@ -275,7 +335,9 @@ class AFLockCamera(LockCamera):
                     qpd_dict["y_off"] = y_off
                     
                     self.cameraUpdate.emit(qpd_dict)
-
+                if True:
+                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    print(qpd_dict)
                 self.cnt = 0
 
         

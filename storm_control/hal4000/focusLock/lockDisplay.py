@@ -207,6 +207,8 @@ class QAFCamDisplay(QCamDisplay):
 
         self.setToolTip(self.tooltips[0])
 
+        print("QAFCamDisplay")
+
     def handleQPDUpdate(self, qpd_data):
         """
         Updates the image that will be shown in the widget given a new image 
@@ -607,6 +609,7 @@ class QQPDDisplay(QStatusDisplay):
         self.q_ylabel = q_ylabel
         self.x_value = 0
         self.y_value = 0
+        print("QQPDDisplay")
 
     def paintEvent(self, event):
         if self.functionality is None:

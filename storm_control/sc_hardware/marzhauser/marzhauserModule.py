@@ -55,6 +55,13 @@ class MarzhauserStageFunctionality(stageModule.StageFunctionality):
         self.pos_dict["y"] = y
         self.stagePosition.emit(self.pos_dict)
 
+    def goRelative(self, x, y):
+        # Fixed the not show relative move problem
+        super().goRelative(x,y)
+        self.pos_dict["x"] += x
+        self.pos_dict["y"] += y
+        self.stagePosition.emit(self.pos_dict)
+
     def handleStagePosition(self, pos_dict):
         self.pos_dict = pos_dict
         #self.querying = False

@@ -747,7 +747,8 @@ if (__name__ == "__main__"):
 
     # Load configuration.
     config = params.config(args.config)
-
+    #Yuan: test
+    print(config)
     # Start logger.
     hdebug.startLogging(config.get("directory") + "logs/", "hal4000")
     

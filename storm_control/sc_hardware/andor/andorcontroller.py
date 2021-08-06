@@ -269,7 +269,10 @@ class AndorCamera:
         while (self.setEMGainMode(n_modes)):
             n_modes += 1
         self._props_["NumberEMGainModes"] = n_modes
-        self.setEMGainMode(0)
+        self.setEMGainMode(3)
+        # Yuan: change the default EMGainMode to Real
+        # TODO: ask Ruobo which would he like most, real or linear?
+        # TODO: add seetEMAdvanced to the UI to enable 300x+ gain
 
         # Determine the maximum binning values.
         max_binning = ctypes.c_int()
@@ -803,7 +806,7 @@ class AndorCamera:
         setCurrentCamera(self.camera_handle)
         self._abortIfAcquiring_()
         #Yuan: test
-        print(ctypes.c_int(gain))
+        #print(ctypes.c_int(gain))
         low = ctypes.c_int()
         high = ctypes.c_int()
         andor.GetEMGainRange(ctypes.byref(low), ctypes.byref(high))
