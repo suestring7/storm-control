@@ -34,6 +34,7 @@ class AOTFFunctionality(amplitudeModule.AmplitudeFunctionalityBuffered):
 
     def startFilm(self, power):
         self.onOff(power, True)
+        print("I-startFilm, called onOff")
         
 
 class AOTFModule(amplitudeModule.AmplitudeModule):
@@ -67,14 +68,13 @@ class AOTFModule(amplitudeModule.AmplitudeModule):
                                    fn_params.get("off_frequency"),
                                    fn_params.get("off_frequency")]
 
-                    # FIXME: This won't work unless fsk_mode is 1.
+                    # fsk_mode 0, 1,3,5,7.
                     if use_fsk:
                         frequencies[1] = fn_params.get("on_frequency")
                         self.aotf.fskOn(channel, fsk_mode)
                     else:
                         frequencies[0] = fn_params.get("on_frequency")
                         self.aotf.fskOff(channel)
-
                     self.aotf_fns[aotf_fn_name] = AOTFFunctionality(aotf = self.aotf,
                                                                     channel = channel,
                                                                     device_mutex = self.aotf_mutex,

@@ -164,6 +164,8 @@ class DOTaskFunctionality(NidaqFunctionality):
         self.task.startTask()
         
     def output(self, state):
+        # TODO
+        #print("DOTaskFunctionality")
         super().output(state)
         if self.task is None:
             self.createTask()
@@ -197,6 +199,8 @@ class WVTaskFunctionality(daqModule.DaqFunctionality):
         """
         Output a single analog value on each line.
         """
+        # TODO
+        print("WVTaskFunctionality")
         self.stopAndDelete()
         for i, line in enumerate(self.lines):
             nicontrol.setAnalogLine(line, values[i])

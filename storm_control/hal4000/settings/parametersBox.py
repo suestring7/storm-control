@@ -72,6 +72,7 @@ class ParametersBox(QtWidgets.QGroupBox):
         """
         Return the current parameters.
         """
+        print("YT: When did I get current parameters?")
         return self.ui.settingsListView.getCurrentParameters()
         
     def getEnabled(self):
@@ -118,6 +119,8 @@ class ParametersBox(QtWidgets.QGroupBox):
         self.editParameters.emit()
 
     def handleNewParameters(self, parameters):
+        #print("YT: new?")
+        #print(parameters.parameters)
         self.newParameters.emit(parameters, False)
 
     def handleSaveParameters(self, parameters):

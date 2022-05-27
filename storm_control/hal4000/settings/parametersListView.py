@@ -124,9 +124,12 @@ class ParametersMVC(QtWidgets.QListView):
         """
         Return the currently selected items parameters.
         """
+        #print("getCurrentParameters")
         return self.getItemParameters(self.getCurrentItem())
 
     def getItemParameters(self, q_item):
+        #print("getItemParameters")
+        #print(getItemData(q_item).parameters)
         return getItemData(q_item).parameters
         
     def getPreviousItem(self):
@@ -229,6 +232,7 @@ class ParametersMVC(QtWidgets.QListView):
         Set the previously selected item as the current item.
         """
         self.setCurrentItem(self.getPreviousItem())
+        print("I guess we didn't revert???")
         
     def setCurrentItem(self, q_item):
         self.handleClicked(self.model.indexFromItem(q_item))

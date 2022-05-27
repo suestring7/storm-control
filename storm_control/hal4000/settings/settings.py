@@ -66,7 +66,6 @@ class Settings(halModule.HalModule):
                                          is_saved = False))
 
         self.view.addParameters(p, is_default = True)
-
         self.configure_dict = {"ui_order" : 0,
                                "ui_parent" : "hal.containerWidget",
                                "ui_widget" : self.view}
@@ -189,6 +188,11 @@ class Settings(halModule.HalModule):
         self.setLockout(True)
         
         # is_edit means we are sending a modified version of the current parameters.
+        #print("YT: 0 handlenewparameter")   
+        #print(parameters.copy().parameters)               
+        #self.sendMessage(halMessage.HalMessage(m_type = "new parameters",
+         #                                      data = {"parameters" : self.view.default_parameters,
+          #                                             "is_edit" : is_edit}))
         self.sendMessage(halMessage.HalMessage(m_type = "new parameters",
                                                data = {"parameters" : parameters.copy(),
                                                        "is_edit" : is_edit}))
@@ -248,7 +252,6 @@ class Settings(halModule.HalModule):
                         if "old parameters" in data:
                             self.view.updatePreviousParameters(response.source,
                                                                data["old parameters"])
-
                 for response in message.getResponses():
                     data = response.getData()
                     if "new parameters" in data:

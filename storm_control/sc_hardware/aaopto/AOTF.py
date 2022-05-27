@@ -121,6 +121,7 @@ class AOTF(RS232.RS232):
 #        cmd = "L" + str(channel) + "P" + str(amplitude)
         self.commWithResp(cmd)
 
+
     ## setFrequency
     #
     # Set the frequencyt of a channel of the AOTF.

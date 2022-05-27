@@ -17,10 +17,16 @@ import socket
 import subprocess
 import telnetlib
 import time
+import sys
+sys.path.append("C:\\Users\\yxt5273\\Documents\\GitHub\\storm-control\\storm_control\\hal4000")
+import dirty
 
 aotf = None
 response_time = 0.05
 instantiated = False
+print("mie")
+print(hex(id(dirty.quick_fix_illumination)))
+print(dirty.quick_fix_illumination)
 
 
 class AOTF(object):
@@ -106,7 +112,13 @@ class AOTF(object):
         if self.live:
             cmd += "\n"
             cmd = cmd.encode(self.encoding)
-            assert(aotf.AotfWrite(self.aotf_handle, ctypes.c_uint(len(cmd)), ctypes.c_char_p(cmd)) == 1)
+            #global quick_fix_illumination
+            print("dirtyAOTF: "+str(dirty.quick_fix_illumination))
+            print(hex(id(dirty.quick_fix_illumination)))
+            if dirty.quick_fix_illumination==1:
+                assert(aotf.AotfWrite(self.aotf_handle, ctypes.c_uint(len(cmd)), ctypes.c_char_p(cmd)) == 1)
+            # TODO
+                print("ok, we did use the mod+ then", cmd)
 
     def _sendCmd(self, cmd):
         """
@@ -203,6 +215,7 @@ class AOTF(object):
         Set the frequency of the specified channel. 
         """
         self.setFrequencies(channel, [frequency])
+        print(channel, frequency)
 
     def shutDown(self):
         """
@@ -360,8 +373,8 @@ class AOTFTelnet(AOTF):
 #
 if (__name__ == "__main__"):
     #my_aotf = AOTF()
-    #my_aotf = AOTF64Bit(python32_exe = "C:/Users/hazen/AppData/Local/Programs/Python/Python36-32/python")
-    my_aotf = AOTFTelnet("192.168.10.3")
+    my_aotf = AOTF64Bit(python32_exe = "C:/Users/yxt5273/AppData/Local/Programs/Python/Python38-32/python")
+    #my_aotf = AOTFTelnet("192.168.10.3")
 
     if not my_aotf.getStatus():
         exit()

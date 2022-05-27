@@ -99,6 +99,8 @@ class Channel(QtCore.QObject):
         """
         power = self.channel_ui.getAmplitude()
         return "{0:.4f}".format((power - self.min_amplitude)/self.amplitude_range)
+        # TODO:
+        #print(self.amplitude_range)
 
     def getDaqWaveforms(self, waveform, oversampling):
         """
@@ -108,11 +110,13 @@ class Channel(QtCore.QObject):
             return []
 
         daq_waveforms = []
-
+        # TODO: why do we need a waveform?
+        #print("waveform")
         # Scale analog waveform.
         if self.analog_modulation is not None:
             temp = waveform * (self.max_voltage - self.min_voltage) - self.min_voltage
             temp = numpy.ascontiguousarray(temp, dtype = numpy.float64)
+            #print(temp)
             daq_waveforms.append(daqModule.DaqWaveform(source = self.analog_modulation.getSource(),
                                                        oversampling = oversampling,
                                                        waveform = temp))
@@ -122,6 +126,7 @@ class Channel(QtCore.QObject):
             temp = numpy.round(waveform).astype(numpy.uint8)
             temp[(temp != 0)] = 1
             temp = numpy.ascontiguousarray(temp, dtype = numpy.uint8)
+            #print(temp)
             daq_waveforms.append(daqModule.DaqWaveform(is_analog = False,
                                                        source = self.digital_modulation.getSource(),
                                                        oversampling = oversampling,
@@ -156,15 +161,20 @@ class Channel(QtCore.QObject):
         
         As a side effect this records the on/off setting in the
         'on_off_state' property of the parameters.
+
+        So how the hell do you need so many modulations to turn it on or off????
         """
         if self.filming:
             raise Exception("Logic flaw detected.")
-
+        # TODO:
         if on:
             if self.amplitude_modulation is not None:
+                #print("YT: Use amplitude to turn on")
                 self.amplitude_modulation.onOff(self.channel_ui.getAmplitude(), True)
+                print(self.channel_ui.getAmplitude())
 
             if self.analog_modulation is not None:
+                #print("YT: Use analog_modulation to turn on")
                 self.analog_modulation.output(self.max_voltage)
 
         else:
@@ -190,6 +200,8 @@ class Channel(QtCore.QObject):
         
         As a side effect this records the current power setting in
         'default_power' property of the parameters.
+
+        So only the amplitude_modulation would set power.
         """
         if self.display_normalized:
             power = (new_power - self.min_amplitude)/self.amplitude_range
@@ -275,8 +287,8 @@ class Channel(QtCore.QObject):
                 
             self.bad_module = False
             self.channel_ui.enableChannel()
-            self.channel_ui.onOffChange.connect(self.handleOnOffChange)
             self.channel_ui.powerChange.connect(self.handleSetPower)
+            self.channel_ui.onOffChange.connect(self.handleOnOffChange)
 
             #
             # This deals with daq taking over the functionalities when filming. We

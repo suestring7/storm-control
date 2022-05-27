@@ -24,6 +24,9 @@ import importlib
 import os
 import signal
 import time
+import sys
+sys.path.append("C:\\Users\\yxt5273\\Documents\\GitHub\\storm-control\\storm_control\\hal4000")
+import dirty
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -383,6 +386,7 @@ class HalCore(QtCore.QObject):
                  **kwds):
         super().__init__(**kwds)
 
+
         self.modules = []
         self.module_name = "core"
         self.qt_settings = QtCore.QSettings("storm-control", "hal4000" + config.get("setup_name").lower())
@@ -429,6 +433,7 @@ class HalCore(QtCore.QObject):
         # Need to load HAL's main window first so that other GUI windows will
         # have the correct Qt parent.
         #
+        
         module_names = sorted(config.get("modules").getAttrs())
         module_names.insert(0, module_names.pop(module_names.index("hal")))        
         for module_name in module_names:
@@ -445,6 +450,7 @@ class HalCore(QtCore.QObject):
 
             # Load the module.
             a_module = importlib.import_module(module_params.get("module_name"))
+            print(hex(id(dirty.quick_fix_illumination)))
             a_class = getattr(a_module, module_params.get("class_name"))
             a_object = a_class(module_name = module_name,
                                module_params = module_params,
@@ -586,7 +592,7 @@ class HalCore(QtCore.QObject):
 
     def handleMessage(self, message):
         """
-        Adds a message to the queue of images to send.
+        Adds a message to the queue of messages to send.
         """
         # Check the message and it to the queue.
         if self.strict:
@@ -599,7 +605,7 @@ class HalCore(QtCore.QObject):
             halMessage.validateData(validator, message)
             
         message.logEvent("queued")
-
+        print("YT5/9: handle message" + message.m_type +" "+message.getSourceName())
         self.queued_messages.append(message)
 
         # Start the message timer, if it is not already running.
@@ -687,6 +693,18 @@ class HalCore(QtCore.QObject):
             #
             else:
                 print(cur_message.source.module_name + " '" + cur_message.m_type + "'")
+                #print("YT5/9: Ah, it's here where it prints...")
+                # dirty fix
+                if cur_message.source.module_name == "settings":
+                    if cur_message.m_type == "new parameters":
+                        dirty.quick_fix_illumination = 0
+                    elif cur_message.m_type == "updated parameters":
+                        dirty.quick_fix_illumination = 1
+                print("dirty: "+str(dirty.quick_fix_illumination))                
+                #print("dirty: "+str(dirty.read_fix()))
+                print(hex(id(dirty.quick_fix_illumination)))
+
+                # dirty end
 
                 # Check for "closeEvent" message from the main window.
                 if cur_message.isType("close event") and (cur_message.getSourceName() == "hal"):
@@ -701,12 +719,14 @@ class HalCore(QtCore.QObject):
                     # Otherwise send the message.
                     else:
                         cur_message.logEvent("sent")
-
                         cur_message.processed.connect(self.handleProcessed)
                         self.sent_messages.append(cur_message)
                         for module in self.modules:
                             cur_message.ref_count += 1
                             module.handleMessage(cur_message)
+                            print("5/13:")
+                            print(module)
+                            print(cur_message)
 
                     # Process any remaining messages with immediate timeout.
                     if (len(self.queued_messages) > 0):
@@ -723,6 +743,11 @@ if (__name__ == "__main__"):
     # Use both so that we can pass sys.argv to QApplication.
     import argparse
     import sys
+    
+    dirty.quick_fix_illumination = 1
+    print(hex(id(dirty.quick_fix_illumination)))
+
+
 
     # Get command line arguments..
     parser = argparse.ArgumentParser(description = 'STORM microscope control software')
@@ -752,6 +777,7 @@ if (__name__ == "__main__"):
     # Start logger.
     hdebug.startLogging(config.get("directory") + "logs/", "hal4000")
     
+
     # Setup HAL and all of the modules.
     hal = HalCore(config = config,
                   parameters_file_name = args.default_xml)

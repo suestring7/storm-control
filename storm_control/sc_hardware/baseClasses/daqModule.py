@@ -67,6 +67,8 @@ class DaqFunctionality(hardwareModule.HardwareFunctionality):
         super().__init__(**kwds)
         self.am_filming = False
         self.source = source
+        # TODO
+        print(source)
 
     def amFilming(self):
         return self.am_filming

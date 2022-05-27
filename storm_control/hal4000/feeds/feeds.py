@@ -164,6 +164,7 @@ class FeedFunctionality(cameraFunctionality.CameraFunctionality):
         self.frame_number = 0
 
     def setCameraFunctionality(self, camera_functionality):
+        print("YT:setCameraFunctionality???????????????????????????????????????????????")
         self.cam_fn = camera_functionality
 
         # We are changing some of the parameters here so that the feed will
@@ -219,6 +220,7 @@ class FeedFunctionality(cameraFunctionality.CameraFunctionality):
         for pname in ["default_max", "default_min", "flip_horizontal", "flip_vertical",
                       "fps", "max_intensity", "transpose", "x_bin", "y_bin"]:
             p.add(self.cam_fn.parameters.getp(pname).copy())
+            print("YT:I am feed.py and I am push "+pname+" "+ self.cam_fn.parameters.getp(pname) +"to camera")
 
         # Connect camera functionality signals. We just pass most of
         # these through.

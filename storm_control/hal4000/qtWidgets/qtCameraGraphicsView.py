@@ -107,10 +107,11 @@ class QtCameraGraphicsView(QtWidgets.QGraphicsView):
         This is called when the camera or frame size may have changed.
         """
         self.chip_max = camera_functionality.getChipMax()
-
+        #print("YT: "+camera_functionality)
         # Calculate transform matrix.
         [cx, cy] = camera_functionality.getChipSize()
-
+        #print(feed_parameters.get("flip_horizontal"))
+        #print("YT: "+camera_functionality.getParameter("flip_horizontal"))
         if camera_functionality.getParameter("flip_horizontal"):
             flip_lr = QtGui.QTransform(-1.0, 0.0, 0.0,
                                        0.0, 1.0, 0.0,
