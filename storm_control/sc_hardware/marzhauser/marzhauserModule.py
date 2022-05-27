@@ -29,7 +29,7 @@ class MarzhauserStageFunctionality(stageModule.StageFunctionality):
         # current position.
         self.updateTimer = QtCore.QTimer()
         self.updateTimer.setInterval(update_interval)
-        self.updateTimer.setSingleShot(True)
+        #self.updateTimer.setSingleShot(True)
         self.updateTimer.timeout.connect(self.handleUpdateTimer)
         self.updateTimer.start()
 
@@ -65,6 +65,7 @@ class MarzhauserStageFunctionality(stageModule.StageFunctionality):
     def handleStagePosition(self, pos_dict):
         self.pos_dict = pos_dict
         #self.querying = False
+        #print("handleStagePosition")
 
     def handleUpdateTimer(self):
         """
@@ -79,6 +80,7 @@ class MarzhauserStageFunctionality(stageModule.StageFunctionality):
         #     self.querying = True
         #     self.mustRun(task = self.stage.position)
         self.maybeRun(task = self.stage.position)
+        #print("handleUpdateTimer")
 
     def wait(self):
         self.updateTimer.stop()

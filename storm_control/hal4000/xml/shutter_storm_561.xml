@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<repeat>
+  <frames>8000</frames>
+  <event>
+    <channel>2</channel>
+    <power>1.0</power>
+    <on>100</on>
+    <off>8000.0</off>
+    <color>255,255,255</color>
+  </event>
+  <event>
+    <channel>1</channel>
+    <power>1.0</power>
+    <on>200</on>
+    <off>8000.0</off>
+    <color>255,255,255</color>
+  </event>
+</repeat>

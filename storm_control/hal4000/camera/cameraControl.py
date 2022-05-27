@@ -415,7 +415,6 @@ class HWCameraControl(CameraControl):
                 # Emit new data signal.
                 self.newData.emit(frame_data)
             self.msleep(5)
-
         self.camera.stopAcquisition()
             
 #    def startCamera(self):

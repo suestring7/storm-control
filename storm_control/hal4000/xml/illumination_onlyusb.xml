@@ -145,7 +145,7 @@
       <class_name type="string">AOTF64BitModule</class_name>
 
       <configuration>
-        <use_fsk type="boolean">True</use_fsk>
+        <use_fsk type="boolean">False</use_fsk>
         <fsk_mode type="int">1</fsk_mode>
         <python32_exe type="string">C:/Users/yxt5273/AppData/Local/Programs/Python/Python38-32/python</python32_exe>
         
@@ -154,22 +154,22 @@
              message and "name" = "aotf.xxx". -->
 
         <ilm642>
-          <channel type="int">0</channel>
-          <on_frequency type="float">91.1</on_frequency>
+          <channel type="int">2</channel>
+          <on_frequency type="float">91.05</on_frequency>
           <off_frequency type="float">20</off_frequency>
-          <maximum type="int">9700</maximum>
+          <maximum type="int">3000</maximum>
         </ilm642>
         <ilm560>
           <channel type="int">1</channel>
-          <on_frequency type="float">108.21</on_frequency>
+          <on_frequency type="float">108.09</on_frequency>
           <off_frequency type="float">20</off_frequency>
-          <maximum type="int">9200</maximum>
+          <maximum type="int">3000</maximum>
         </ilm560>
         <ilm488>
-          <channel type="int">2</channel>
-          <on_frequency type="float">130.24</on_frequency>
+          <channel type="int">0</channel>
+          <on_frequency type="float">130.23</on_frequency>
           <off_frequency type="float">20</off_frequency>
-          <maximum type="int">9700</maximum>
+          <maximum type="int">3000</maximum>
         </ilm488>
   
       </configuration>
@@ -186,6 +186,7 @@
           <counter type="string">/Dev1/ctr0</counter>
           <counter_out type="string">/Dev1/ctr2out</counter_out>
         </timing>
+
 
         <ilm642>
           <ao_task>
@@ -224,6 +225,7 @@
           </do_task>
         </ilm488sh>
 
+
       </configuration>
     </daq>    
 
@@ -232,6 +234,7 @@
     <illumination>
       <class_name type="string">Illumination</class_name>
       <module_name type="string">storm_control.hal4000.illumination.illumination</module_name>
+      <shutters type="string">shutter_storm_561.xml</shutters>
       <configuration>
 
        <!-- Note: The name of the channel is the gui_name.
@@ -243,16 +246,6 @@
           <hw_fn_name>aotf.ilm642</hw_fn_name>
         </amplitude_modulation>
 
-        <analog_modulation>
-          <hw_fn_name type="string">daq.ilm642.ao_task</hw_fn_name>
-          <max_voltage type="float">1.0</max_voltage>
-          <min_voltage type="float">0.0</min_voltage>
-        </analog_modulation>   
-
-        <mechanical_shutter>
-          <hw_fn_name type="string">daq.ilm642sh.do_task</hw_fn_name>
-        </mechanical_shutter> 
-
       </ch1>
 
       <ch2>
@@ -262,16 +255,6 @@
           <hw_fn_name>aotf.ilm560</hw_fn_name>
         </amplitude_modulation>
 
-        <analog_modulation>
-          <hw_fn_name type="string">daq.ilm560.ao_task</hw_fn_name>
-          <max_voltage type="float">1.0</max_voltage>
-          <min_voltage type="float">0.0</min_voltage>
-        </analog_modulation>   
-
-        <mechanical_shutter>
-          <hw_fn_name type="string">daq.ilm560sh.do_task</hw_fn_name>
-        </mechanical_shutter>
-
       </ch2>
 
       <ch3>
@@ -280,17 +263,6 @@
         <amplitude_modulation>
           <hw_fn_name>aotf.ilm488</hw_fn_name>
         </amplitude_modulation>
-
-        <analog_modulation>
-          <hw_fn_name type="string">daq.ilm488.ao_task</hw_fn_name>
-          <max_voltage type="float">1.0</max_voltage>
-          <min_voltage type="float">0.0</min_voltage>
-        </analog_modulation>  
-
-        <mechanical_shutter>
-          <hw_fn_name type="string">daq.ilm488sh.do_task</hw_fn_name>
-        </mechanical_shutter>
-
 
       </ch3>
 

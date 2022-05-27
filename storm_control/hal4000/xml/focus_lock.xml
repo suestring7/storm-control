@@ -172,7 +172,7 @@
       <configuration>
         <ir_laser type="string">ldc_irlaser</ir_laser>
         <ir_power type="int">10</ir_power>
-        <lock_modes type="string">NoLockMode,AutoLockMode,AlwaysOnLockMode,OptimalLockMode,CalibrationLockMode</lock_modes>
+        <lock_modes type="string">NoLockMode,AutoLockMode,AlwaysOnLockMode,OptimalLockMode,CalibrationLockMode,DiagnosticsLockMode</lock_modes>
         <qpd type="string">pgrey_camera</qpd>
         <z_stage type="string">mcl_zstage</z_stage>
         <parameters>
@@ -265,11 +265,14 @@
           <WidthMax type="int">1440</WidthMax>
           <HeightMax type="int">1080</HeightMax>
           -->
-          <!--set the roi for the two spots -->
+          <!--set the roi for the two spots 
+            offsetY Y axis
+            offsetX X axis
+          -->
           <Height type="int">256</Height>
           <Width type="int">512</Width>
-          <OffsetX type="int">360</OffsetX>
-          <OffsetY type="int">780</OffsetY>
+          <OffsetX type="int">324</OffsetX>
+          <OffsetY type="int">670</OffsetY>
           
           
 

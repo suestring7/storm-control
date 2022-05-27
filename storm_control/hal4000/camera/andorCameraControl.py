@@ -115,7 +115,7 @@ class AndorCameraControl(cameraControl.HWCameraControl):
         preamp_gains = self.camera.getPreampGains()
         self.parameters.add(params.ParameterSetFloat(description = "Pre-amplifier gain",
                                                      name = "preampgain",
-                                                     value = preamp_gains[0], 
+                                                     value = preamp_gains[-1], 
                                                      allowed = preamp_gains))
 
         hs_speeds = self.camera.getHSSpeeds()[0]
@@ -163,7 +163,7 @@ class AndorCameraControl(cameraControl.HWCameraControl):
         self.parameters.add(params.ParameterSetInt(description = "Vertical shift amplitude",
                                                    name = "vsamplitude",
                                                    value = 0, 
-                                                   allowed = [0, 1, 2]))
+                                                   allowed = [0, 1, 2, 3, 4]))
 
         self.parameters.add(params.ParameterSetBoolean(description = "Fan off during filming",
                                                        name = "off_during_filming",
@@ -194,6 +194,7 @@ class AndorCameraControl(cameraControl.HWCameraControl):
 
     def closeShutter(self):
         super().closeShutter()
+
         if self.camera_working:
             running = self.running
             if running:
@@ -305,7 +306,10 @@ class AndorCameraControl(cameraControl.HWCameraControl):
                     self.camera.setPreAmpGain(parameters.get("preampgain"))
 
                 elif (pname == "temperature"):
+                    #self.camera.goToTemperature(parameters.get("temperature"))
                     self.camera.setTemperature(parameters.get("temperature"))
+                    # TODO:
+                    # print("SetTemperature!")
 
                 elif (pname == "vsamplitude"):
                     self.camera.setVSAmplitude(parameters.get("vsamplitude"))

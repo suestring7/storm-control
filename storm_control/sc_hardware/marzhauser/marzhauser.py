@@ -84,7 +84,7 @@ class MarzhauserRS232(RS232.RS232):
 if (__name__ == "__main__"):
     import time
 
-    stage = MarzhauserRS232(port = "COM1", baudrate = 57600)
+    stage = MarzhauserRS232(port = "COM7", baudrate = 57600)
     
     def comm(cmd, timeout):
         cmd()
@@ -94,7 +94,7 @@ if (__name__ == "__main__"):
     if stage.getStatus():
 
         # Test communication.
-        if False:
+        if True:
             print("SN:", comm(stage.serialNumber, 0.1))
             print("zero:", comm(stage.zero, 0.1))
             print("position:", comm(stage.position, 0.1))
@@ -109,9 +109,8 @@ if (__name__ == "__main__"):
             for i in range(reps):
                 print(i)
                 stage.position()
-                stage.goAbsolute(i*10,0)
+                stage.goRelative(i*10,0)
                 stage.position()
-                time.sleep(0.1)
 
             for i in range(3*reps + 4):
                 responses = stage.readline()

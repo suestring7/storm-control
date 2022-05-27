@@ -2,7 +2,7 @@
 <config>
 
   <!-- The starting directory. -->
-  <directory type="directory">C:/Data/</directory>
+  <directory type="directory">E:/default/</directory>
   
   <!-- The setup name -->
   <setup_name type="string">hbaic-pgrey</setup_name>
@@ -63,7 +63,7 @@
 
       <!-- Film parameters specific to this setup go here. -->
       <parameters>
-	<extension desc="Movie file name extension" type="string" values=",Red,Green,Blue"></extension>
+        <extension desc="Movie file name extension" type="string" values=",Red,Green,Blue"></extension>
       </parameters>
     </film>
 
@@ -74,14 +74,14 @@
 
       <!-- List objectives available on this setup here. -->
       <parameters>
-	<flip_horizontal desc="Flip image horizontal (mosaic)" type="boolean">False</flip_horizontal>
-	<flip_vertical desc="Flip image vertical (mosaic)" type="boolean">False</flip_vertical>
-	<transpose desc="Transpose image (mosaic)" type="boolean">False</transpose>
+        <flip_horizontal desc="Flip image horizontal (mosaic)" type="boolean">False</flip_horizontal>
+        <flip_vertical desc="Flip image vertical (mosaic)" type="boolean">False</flip_vertical>
+        <transpose desc="Transpose image (mosaic)" type="boolean">False</transpose>
 
-	<objective desc="Current objective" type="string" values="obj1,obj2,obj3">obj1</objective>
-	<obj1 desc="Objective 1" type="custom">60x,0.120,0.0,0.0</obj1>
-	<obj2 desc="Objective 2" type="custom">10x,1.60,0.0,0.0</obj2>
-	<obj3 desc="Objective 3" type="custom">4x,4.0,0.0,0.0</obj3>	
+        <objective desc="Current objective" type="string" values="obj1,obj2,obj3">obj1</objective>
+        <obj1 desc="Objective 1" type="custom">60x,0.120,0.0,0.0</obj1>
+        <obj2 desc="Objective 2" type="custom">10x,1.60,0.0,0.0</obj2>
+        <obj3 desc="Objective 3" type="custom">4x,4.0,0.0,0.0</obj3>	
       </parameters>
     </mosaic>
 
@@ -138,6 +138,7 @@
       	  <flip_vertical type="boolean">False</flip_vertical>
       	  <transpose type="boolean">False</transpose>
 
+          <temperature type="int">-70</temperature>
       	  <!-- These can be changed / editted. -->
 
       	  <!-- This is the extension to use (if any) when saving data from this camera. -->

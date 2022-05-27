@@ -270,25 +270,6 @@ class AFLockCamera(LockCamera):
             image1 = frame[self.roi1]
             image2 = frame[self.roi2]
 
-            # Yuan: Debugging ROI shape issues
-            if False:
-                print('\n\n------------------------\nDebugging ROI shape issues')
-                print(f'self.roi1 = {self.roi1}')
-                print(f'self.roi2 = {self.roi2}')
-                print(f'frame.shape = {frame.shape}')
-                print(f'image1.shape = {image1.shape}')
-                print(f'image2.shape = {image2.shape}')
-                print(f'image1.dtype = {image1.dtype}')
-                print(f'image2.dtype = {image2.dtype}')
-                print('------------------------\n\n')
-
-
-            # Debugging image1 and image2 into findOffsetU16NM
-            if False:
-                # testing what happens without the reshapping
-                print('saving image1.npy and image2.npy...')
-                numpy.save(r'C:\Users\yxt5273\Desktop\focus_lock_debugging\image1.npy',image1)
-                numpy.save(r'C:\Users\yxt5273\Desktop\focus_lock_debugging\image2.npy',image2)
 
             # This is the offending line
             [x_off, y_off, success, mag] = self.afc.findOffsetU16NM(image1, image2, verbose = False)
@@ -335,9 +316,6 @@ class AFLockCamera(LockCamera):
                     qpd_dict["y_off"] = y_off
                     
                     self.cameraUpdate.emit(qpd_dict)
-                if True:
-                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                    print(qpd_dict)
                 self.cnt = 0
 
         

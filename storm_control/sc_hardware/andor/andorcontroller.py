@@ -15,6 +15,8 @@
 import ctypes
 import numpy
 import time
+import progressbar
+from tqdm import tqdm
 
 import storm_control.sc_library.halExceptions as halExceptions
 
@@ -286,6 +288,9 @@ class AndorCamera:
         andorCheck(andor.GetMaximumExposure(ctypes.byref(max_exp)), "GetMaximumExposure")
         self._props_["MaxExposure"] = max_exp.value
 
+        # YT: Since our camera doesn't have a physical shutter, here we put a virtual one.
+        self.vshutter = True
+
     #
     # Helper functions.
     #
@@ -316,11 +321,7 @@ class AndorCamera:
     #
     # Close the camera shutter. This will abort the current acquisition.
     def closeShutter(self):
-        setCurrentCamera(self.camera_handle)
-        self._abortIfAcquiring_()
-        status = andor.SetShutter(0, 2, 0, 0)
-        if (status != drv_success):
-            print("SetShutter (closed) failed: ", status)
+        self.vshutter = True
 
     ## coolerOff
     #
@@ -665,6 +666,7 @@ class AndorCamera:
     #
     # @return Return the camera temperature.
     #
+    # YT: I don't think we care if the temp is stable or not?
     def getTemperature(self):
         setCurrentCamera(self.camera_handle)
         temperature = ctypes.c_int()
@@ -698,25 +700,34 @@ class AndorCamera:
     # Loops until the camera stabilizes at the desired temperature.
     #
     # @param temperature The desired temperature.
-    #
+    # YT: written command that never been used?
+    # YT: I added it to report the temperature during initialization
+    # However, since we would like to edit settings before camera is ready, we don't use the function anymore as well.....
     def goToTemperature(self, temperature):
         setCurrentCamera(self.camera_handle)
         self.setTemperature(temperature)
         status = self.getTemperature()
-        while (status[1] == "unstable"):
+        #print("Current temperature is: ", status[0])
+        #tbar = tqdm(total=100)
+        #tbar.update(30-status[0])
+        #pstatus = status[0]
+        #while (status[1] == "unstable"):
+
+        while (status[0] > temperature):
             time.sleep(5)
-            status = camera.getTemperature()
+            status = self.getTemperature()
+            #tbar.update(pstatus-status[0])
+            #pstatus = status[0]
+            print("Current temperature is: ", status[0])
+        #tbar.close()
 
     ## openShutter
     #
     # Open the camera shutter. This will abort the current acquisition.
     #
     def openShutter(self):
-        setCurrentCamera(self.camera_handle)
-        self._abortIfAcquiring_()
-        status = andor.SetShutter(0, 1, 0, 0)
-        if (status != drv_success):
-            print("SetShutter (open) failed: ", status)
+        self.vshutter = False
+        
 
     ## setACQMode
     #
@@ -810,7 +821,7 @@ class AndorCamera:
         low = ctypes.c_int()
         high = ctypes.c_int()
         andor.GetEMGainRange(ctypes.byref(low), ctypes.byref(high))
-        print(low.value, high.value)
+        #print(low.value, high.value)
         andorCheck(andor.SetEMCCDGain(ctypes.c_int(gain)), "SetEMCCDGain")
 
     ## setEMGainMode
@@ -1071,15 +1082,6 @@ class AndorCamera:
         self._abortIfAcquiring_()
         self.closeShutter()
         self.coolerOff()
-        if False:
-            # I thought this might turn off the fan, which seems to run
-            # pretty much all the time, but no luck there.
-            print("Warming")
-            current_temp = self.getTemperature()[0]
-            while(current_temp < 0):
-                print("  Temperature:", current_temp)
-                time.sleep(5.0)
-                current_temp = self.getTemperature()[0]
         andor.ShutDown()
 
     ## startAcquisition
@@ -1087,16 +1089,22 @@ class AndorCamera:
     # Start the acquisition.
     #
     def startAcquisition(self):
-        setCurrentCamera(self.camera_handle)
-        andorCheck(andor.StartAcquisition(), "StartAcquisition")
+        if self.vshutter:
+            pass
+        else:
+            setCurrentCamera(self.camera_handle)
+            andorCheck(andor.StartAcquisition(), "StartAcquisition")
 
     ## stopAcquisition
     #
     # Stop the acquisition.
     #
     def stopAcquisition(self):
-        setCurrentCamera(self.camera_handle)
-        self._abortIfAcquiring_()
+        if self.vshutter:
+            pass
+        else:
+            setCurrentCamera(self.camera_handle)
+            self._abortIfAcquiring_()
 
 
 #

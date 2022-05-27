@@ -145,7 +145,7 @@
 		<module_name type="string">storm_control.sc_hardware.marzhauser.marzhauserModule</module_name>
 		<class_name type="string">MarzhauserStage</class_name>
 		<configuration>
-			<port type="string">COM7</port>
+			<port type="string">COM3</port>
 			<baudrate type="int">57600</baudrate>
 			<velocity type="int">1</velocity>  <!-- 0.4 for MF6 -->
 			<acceleration type="string">0.1</acceleration> <!-- from MF6 -->

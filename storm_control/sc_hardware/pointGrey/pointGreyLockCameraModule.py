@@ -36,7 +36,6 @@ class PGQPDAutoFocusFunctionality(hardwareModule.HardwareFunctionality, lockModu
         # was not tested.
         #
         qpd_dict["offset"] = qpd_dict["offset"] * self.units_to_microns
-        print("emit success!")
         self.qpdUpdate.emit(qpd_dict)
 
     def getMinimumInc(self):

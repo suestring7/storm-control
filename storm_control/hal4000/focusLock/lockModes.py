@@ -148,8 +148,8 @@ class LockedMixin(object):
         self.lm_buffer = None
         self.lm_buffer_length = 1
         self.lm_counter = 0
-        self.lm_gain = 0.5
-        self.lm_max_gain = 0.7
+        self.lm_gain = 5 #0.5
+        self.lm_max_gain = 10 #0.7
         self.lm_min_sum = 0.0
         self.lm_mode_name = "locked"
         self.lm_offset_threshold = 0.02
@@ -173,15 +173,15 @@ class LockedMixin(object):
 
         p.add(params.ParameterRangeFloat(description = "Lock response gain (near target offset).",
                                          name = "lock_gain",
-                                         value = 0.5,
-                                         min_value = 0.0,
-                                         max_value = 1.0))
+                                         value = 5,
+                                         min_value = 0,
+                                         max_value = 10))
 
         p.add(params.ParameterRangeFloat(description = "Lock response maximum gain (far from target offset).",
                                          name = "lock_gain_max",
-                                         value = 0.7,
-                                         min_value = 0.0,
-                                         max_value = 1.0))
+                                         value = 5.5,
+                                         min_value = 0,
+                                         max_value = 10.0))
 
         p.add(params.ParameterFloat(description = "Maximum allowed difference to still be in lock (nm).",
                                     name = "offset_threshold",
@@ -219,6 +219,7 @@ class LockedMixin(object):
                 diff = (qpd_state["offset"] - self.lm_target)
                 if (abs(diff) < self.lm_offset_threshold):
                     self.lm_buffer[self.lm_counter] = 1
+                    print(self.lm_counter)  # YT:
                 else:
                     self.lm_buffer[self.lm_counter] = 0
 
@@ -226,6 +227,9 @@ class LockedMixin(object):
                 #dz = -1.0 * self.lm_gain * diff
                 dz = self.controlFn(diff)
                 LockMode.z_stage_functionality.goRelative(dz)
+                #YT:
+                #print("dz: "+str(dz))
+                #print(diff)
             else:
                 self.lm_buffer[self.lm_counter] = 0
 
@@ -409,6 +413,9 @@ class ScanMixin(object):
                     sm_z_range = behavior_params["scan_range"]
             else:
                 sm_z_range = p.get("scan_range")
+
+            #YT:
+            print(sm_z_range)
 
             # Set z step size.
             if "scan_step" in behavior_params:
@@ -946,7 +953,8 @@ class CalibrationLockMode(JumpLockMode):
         self.clm_counter = 0
 
     def stopFilm(self):
-        LockMode.z_stage_functionality.recenter()        
+        LockMode.z_stage_functionality.recenter()
+        print("This is expected to stopfilm.")        
 
 
 class HardwareZScanLockMode(AlwaysOnLockMode):

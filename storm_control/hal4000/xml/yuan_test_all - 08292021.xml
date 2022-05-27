@@ -63,7 +63,7 @@
 
       <!-- Film parameters specific to this setup go here. -->
       <parameters>
-        <extension desc="Movie file name extension" type="string" values=",A647,Cy5,Cy3,Cy2,A405,FITC,YFP,GFP,BF"></extension>
+	<extension desc="Movie file name extension" type="string" values=",Red,Green,Blue"></extension>
       </parameters>
     </film>
 
@@ -74,14 +74,14 @@
 
       <!-- List objectives available on this setup here. -->
       <parameters>
-      	<flip_horizontal desc="Flip image horizontal (mosaic)" type="boolean">True</flip_horizontal>
-      	<flip_vertical desc="Flip image vertical (mosaic)" type="boolean">False</flip_vertical>
-      	<transpose desc="Transpose image (mosaic)" type="boolean">False</transpose>
+	<flip_horizontal desc="Flip image horizontal (mosaic)" type="boolean">False</flip_horizontal>
+	<flip_vertical desc="Flip image vertical (mosaic)" type="boolean">False</flip_vertical>
+	<transpose desc="Transpose image (mosaic)" type="boolean">False</transpose>
 
-      	<objective desc="Current objective" type="string" values="obj1,obj2,obj3">obj1</objective>
-      	<obj1 desc="Objective 1" type="custom">60x,0.120,0.0,0.0</obj1>
-      	<obj2 desc="Objective 2" type="custom">10x,1.60,0.0,0.0</obj2>
-      	<obj3 desc="Objective 3" type="custom">4x,4.0,0.0,0.0</obj3>	
+	<objective desc="Current objective" type="string" values="obj1,obj2,obj3">obj1</objective>
+	<obj1 desc="Objective 1" type="custom">60x,0.120,0.0,0.0</obj1>
+	<obj2 desc="Objective 2" type="custom">10x,1.60,0.0,0.0</obj2>
+	<obj3 desc="Objective 3" type="custom">4x,4.0,0.0,0.0</obj3>	
       </parameters>
     </mosaic>
 
@@ -135,7 +135,7 @@
       	  <!-- These are the display defaults, not the camera range. -->
       	  <default_max type="int">2000</default_max> 
       	  <default_min type="int">100</default_min>
-      	  <flip_horizontal type="boolean">True</flip_horizontal>
+      	  <flip_horizontal type="boolean">False</flip_horizontal>
       	  <flip_vertical type="boolean">False</flip_vertical>
       	  <transpose type="boolean">False</transpose>
           <temperature type="int">-70</temperature>
@@ -158,7 +158,7 @@
       <class_name type="string">AOTF64BitModule</class_name>
 
       <configuration>
-        <use_fsk type="boolean">False</use_fsk>
+        <use_fsk type="boolean">True</use_fsk>
         <fsk_mode type="int">1</fsk_mode>
         <python32_exe type="string">C:/Users/yxt5273/AppData/Local/Programs/Python/Python38-32/python</python32_exe>
         
@@ -282,7 +282,7 @@
         <amplitude_modulation>
           <hw_fn_name>aotf.ilm642</hw_fn_name>
         </amplitude_modulation>
-      <!--
+
         <analog_modulation>
           <hw_fn_name type="string">daq.ilm642.ao_task</hw_fn_name>
           <max_voltage type="float">1.0</max_voltage>
@@ -292,7 +292,7 @@
         <mechanical_shutter>
           <hw_fn_name type="string">daq.ilm642sh.do_task</hw_fn_name>
         </mechanical_shutter> 
-      -->
+
       </ch1>
 
       <ch2>
@@ -301,7 +301,7 @@
         <amplitude_modulation>
           <hw_fn_name>aotf.ilm560</hw_fn_name>
         </amplitude_modulation>
-      <!--
+
         <analog_modulation>
           <hw_fn_name type="string">daq.ilm560.ao_task</hw_fn_name>
           <max_voltage type="float">1.0</max_voltage>
@@ -311,7 +311,7 @@
         <mechanical_shutter>
           <hw_fn_name type="string">daq.ilm560sh.do_task</hw_fn_name>
         </mechanical_shutter>
-      -->
+
       </ch2>
 
       <ch3>
@@ -320,7 +320,7 @@
         <amplitude_modulation>
           <hw_fn_name>aotf.ilm488</hw_fn_name>
         </amplitude_modulation>
-        <!--
+
         <analog_modulation>
           <hw_fn_name type="string">daq.ilm488.ao_task</hw_fn_name>
           <max_voltage type="float">1.0</max_voltage>
@@ -330,7 +330,7 @@
         <mechanical_shutter>
           <hw_fn_name type="string">daq.ilm488sh.do_task</hw_fn_name>
         </mechanical_shutter>
-        -->
+
       </ch3>
 
       <ch4>
@@ -355,7 +355,7 @@
       <configuration>
         <ir_laser type="string">ldc_irlaser</ir_laser>
         <ir_power type="int">10</ir_power>
-        <lock_modes type="string">NoLockMode,AutoLockMode,AlwaysOnLockMode,OptimalLockMode,CalibrationLockMode,DiagnosticsLockMode</lock_modes>
+        <lock_modes type="string">NoLockMode,AutoLockMode,AlwaysOnLockMode,OptimalLockMode,CalibrationLockMode</lock_modes>
         <qpd type="string">pgrey_camera</qpd>
         <z_stage type="string">mcl_zstage</z_stage>
         <parameters>
@@ -451,8 +451,11 @@
           <!--set the roi for the two spots -->
           <Height type="int">256</Height>
           <Width type="int">512</Width>
-          <OffsetX type="int">320</OffsetX>
-          <OffsetY type="int">650</OffsetY>
+          <OffsetX type="int">380</OffsetX>
+          <OffsetY type="int">780</OffsetY>
+          
+          
+
             
           <background type="float">100.0</background>
           <downsample type="int">8</downsample>
@@ -498,7 +501,7 @@
       <module_name type="string">storm_control.sc_hardware.marzhauser.marzhauserModule</module_name>
       <class_name type="string">MarzhauserStage</class_name>
       <configuration>
-        <port type="string">COM3</port>
+        <port type="string">COM7</port>
         <baudrate type="int">57600</baudrate>
         <velocity type="int">1</velocity>  <!-- 0.4 for MF6 -->
         <acceleration type="string">0.1</acceleration> <!-- from MF6 -->

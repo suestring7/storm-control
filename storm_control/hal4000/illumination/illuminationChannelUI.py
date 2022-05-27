@@ -275,6 +275,7 @@ class ChannelUIAdjustable(ChannelUI):
 class PowerButton(QtWidgets.QPushButton):
     """
     A push button specialized for amplitude / power control.
+    The Max / Low button.
     """
     powerChange = QtCore.pyqtSignal(int)
 

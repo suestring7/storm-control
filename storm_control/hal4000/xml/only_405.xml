@@ -168,7 +168,7 @@
       <class_name type="string">CoherentObis</class_name>
       <!-- TODO: 405 COM -->
       <configuration>
-        <port type="string">COM5</port>
+        <port type="string">COM4</port>
         <used_during_filming type="boolean">True</used_during_filming>
         <maximum type="int">10000</maximum>
       </configuration>
