@@ -415,7 +415,7 @@ class ScanMixin(object):
                 sm_z_range = p.get("scan_range")
 
             #YT:
-            print(sm_z_range)
+            #print(sm_z_range)
 
             # Set z step size.
             if "scan_step" in behavior_params:
