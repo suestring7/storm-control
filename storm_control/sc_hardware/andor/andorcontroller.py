@@ -15,8 +15,6 @@
 import ctypes
 import numpy
 import time
-import progressbar
-from tqdm import tqdm
 
 import storm_control.sc_library.halExceptions as halExceptions
 
@@ -707,11 +705,6 @@ class AndorCamera:
         setCurrentCamera(self.camera_handle)
         self.setTemperature(temperature)
         status = self.getTemperature()
-        #print("Current temperature is: ", status[0])
-        #tbar = tqdm(total=100)
-        #tbar.update(30-status[0])
-        #pstatus = status[0]
-        #while (status[1] == "unstable"):
 
         while (status[0] > temperature):
             time.sleep(5)

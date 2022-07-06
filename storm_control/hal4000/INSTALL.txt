@@ -1,3 +1,10 @@
+(0) Install all the drivers, some problems we met here:
+    a) PySpin only supports python versioin 3.8 (As of 07/06/2022, spinnaker_python-2.4.0.144-cp38-cp38-win_amd64)
+        $ python -m pip install <your path>/spinnaker_python-2.4.0.144-cp38-cp38-win_amd64.whl
+    b) Tango 2.0 driver is the Tango Desktop S, install use Device Manager => Update Driver => Local Directory
+    c) AOTF driver requires disable digital signature verification by pressing shift while click restart to enter Start setting menu.
+    d) NI install a lot.
+
 
 (1) Create a virtual environment to run HAL in. Among other advantages
     this will isolate different versions of HAL from each other.
@@ -13,8 +20,8 @@
           (3) describes how to create the virtual environment in 
           Windows using Anaconda.
     
-    Anaconda example in Windows10 (as of 4/3/18, conda 4.5.0, python 3.6.4.final.0 ):
-    $ conda create --name storm
+    Anaconda example in Windows10 (As of 07/06/2022, PySpin only supports version 3.8 and under; Otherwise no need to specify python version):
+    $ conda create --name storm python=3.8                     
     $ activate storm 
 
 (2) Install Dependencies:
@@ -32,10 +39,10 @@
  (l) pyserial
 
     Anaconda example in Windows10 (as of 4/3/18, conda 4.5.0, python 3.6.4.final.0 ):
-    $ conda install --name storm numpy pip pillow pywin32 pyserial scipy  
-    $ conda install --name storm tifffile -c conda-forge	(https://pypi.python.org/pypi/tifffile)
-    $ pip install PyQt5 					(https://www.riverbankcomputing.com/software/pyqt/download5/)
-    $ pip install PyDAQmx    					(https://pythonhosted.org/PyDAQmx/)
+    $ conda install --name storm numpy pip pillow pywin32 pyserial scipy 
+    $ conda install --name storm tifffile -c conda-forge	  (https://pypi.python.org/pypi/tifffile)
+    $ pip install PyQt5 					                  (https://www.riverbankcomputing.com/software/pyqt/download5/)
+    $ pip install PyDAQmx    					              (https://pythonhosted.org/PyDAQmx/)
 
 conda install -c msys2 m2w64-toolchain
 
