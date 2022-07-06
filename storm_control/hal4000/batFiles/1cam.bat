@@ -8,7 +8,7 @@ rem - conda to be in the PATH
 rem - cmd.exe to be initialized with conda init
 
 rem Define here the path to your conda installation
-set CONDAPATH=C:\Users\yxt5273\.conda
+set CONDAPATH=C:\Users\%username%\.conda
 rem Define here the name of the environment
 set ENVNAME=storm
 
@@ -20,7 +20,7 @@ rem Activate the conda environment
 rem Using call is required here, see: https://stackoverflow.com/questions/24678144/conda-environments-and-bat-files
 call C:\ProgramData\Anaconda3\Scripts\activate.bat %ENVPATH%
 rem Run a python script in that environment
-cd C:\Users\yxt5273\Documents\GitHub\storm-control\storm_control\hal4000\
+cd C:\Users\%username%\Documents\GitHub\storm-control\storm_control\hal4000\
 python hal4000.py xml\1cam_blackfly.xml
 
 
