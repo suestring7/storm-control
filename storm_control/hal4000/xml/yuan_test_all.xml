@@ -2,7 +2,7 @@
 <config>
 
   <!-- The starting directory. -->
-  <directory type="directory">E:/default/</directory>
+  <directory type="directory">D:/default/</directory>
   
   <!-- The setup name -->
   <setup_name type="string">test</setup_name>
@@ -160,7 +160,7 @@
       <configuration>
         <use_fsk type="boolean">False</use_fsk>
         <fsk_mode type="int">1</fsk_mode>
-        <python32_exe type="string">C:/Users/yxt5273/AppData/Local/Programs/Python/Python38-32/python</python32_exe>
+        <python32_exe type="string">C:/Program Files (x86)/Python39-32/python</python32_exe>
         
         <!-- These are the things that we provide AOTF functionality for.
              Other modules will request them with a 'get functionality'

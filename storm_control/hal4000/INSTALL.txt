@@ -4,6 +4,7 @@
     b) Tango 2.0 driver is the Tango Desktop S, install use Device Manager => Update Driver => Local Directory
     c) AOTF driver requires disable digital signature verification by pressing shift while click restart to enter Start setting menu.
     d) NI install a lot.
+    e) You may need to intall 32 bit python if you are using AOTF.
 
 
 (1) Create a virtual environment to run HAL in. Among other advantages
