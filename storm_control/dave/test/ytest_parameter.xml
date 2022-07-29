@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<sequence>
+  
+  <branch name="Movie Loop">    
+  	<DASetDirectory>
+      <directory type="str">D:\Default\test</directory>
+    </DASetDirectory>]
+    <branch name="Parameters_By_Name_0">
+      <DASetParameters>
+        <parameters type="str">setting_100ms_0gain_20intensity</parameters>
+      </DASetParameters>
+      <DATakeMovie>
+        <length type="int">20</length>
+        <parameters type="str">setting_100ms_0gain_20intensity</parameters>
+      </DATakeMovie>
+    </branch>
+        <branch name="Parameters_By_Name_1">
+      <DASetParameters>
+        <parameters type="str">setting_200ms_10gain_10intensity</parameters>
+      </DASetParameters>
+      <DATakeMovie>
+        <length type="int">30</length>
+        <parameters type="str">setting_200ms_10gain_10intensity</parameters>
+      </DATakeMovie>
+    </branch>
+</branch>
+
+</sequence>

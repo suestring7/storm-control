@@ -529,6 +529,8 @@ class TCPControl(halModule.HalModule):
         server = tcpServer.TCPServer(port = configuration.get("tcp_port"),
                                      server_name = "Hal",
                                      parent = self)
+        # YT
+        print("set up the server at port"+ str(configuration.get("tcp_port")))
         self.control = Controller(parallel_mode = configuration.get("parallel_mode"),
                                   server = server,
                                   parent = self)

@@ -41,11 +41,14 @@ class ParamsViewer(QtWidgets.QGroupBox):
             self.ui.EMCCDSlider.valueChanged.disconnect()
             self.ui.EMCCDSlider.setValue(new_gain)
             self.ui.EMCCDSlider.valueChanged.connect(self.handleGainChange)
-        self.ui.EMCCDLabel.setText("EMCCD Gain: {0:d}".format(new_gain))
+        self.ui.EMCCDLabel.setText("Gain: {0:d}".format(new_gain))
 
     def handleGainChange(self, new_gain):
         if self.cam_fn is not None:
-            self.cam_fn.setEMCCDGain(new_gain)
+            if self.cam_fn.hasGain():
+                self.cam_fn.setGain(new_gain)
+            else:
+                self.cam_fn.setEMCCDGain(new_gain)
             
     def handleTemperature(self, t_dict):
         if (t_dict["state"] == "stable"):
@@ -59,6 +62,7 @@ class ParamsViewer(QtWidgets.QGroupBox):
         # Disconnect signals from previous camera_functionality, if any.
         if self.cam_fn is not None:
             self.cam_fn.emccdGain.disconnect(self.handleEMCCDGain)
+            self.cam_fn.gain.disconnect(self.handleEMCCDGain)
             self.cam_fn.temperature.disconnect(self.handleTemperature)
 
         # If this is a feed we want it's source camera functionality.
@@ -68,6 +72,7 @@ class ParamsViewer(QtWidgets.QGroupBox):
             self.cam_fn = camera_functionality.getCameraFunctionality()
 
         # Connect new signals.
+        self.cam_fn.gain.connect(self.handleEMCCDGain)
         self.cam_fn.emccdGain.connect(self.handleEMCCDGain)
         self.cam_fn.temperature.connect(self.handleTemperature)
 
@@ -75,14 +80,15 @@ class ParamsViewer(QtWidgets.QGroupBox):
         self.setTitle(self.cam_fn.getCameraName().title())
 
         # Show hide UI elements.
-        if self.cam_fn.hasEMCCD():
-            if not self.cam_fn.hasParameter("emccd_gain"):
+        if self.cam_fn.hasEMCCD() or self.cam_fn.hasGain():
+            if not self.cam_fn.hasParameter("emccd_gain") and not self.cam_fn.hasParameter("gain"):
                 raise ParamsViewerException("EMCCD cameras must have the 'emccd_gain' parameter.")
             self.ui.EMCCDLabel.show()
             self.ui.EMCCDSlider.show()
         else:
             self.ui.EMCCDLabel.hide()
             self.ui.EMCCDSlider.hide()
+
 
         if self.cam_fn.hasPreamp():
             if not self.cam_fn.hasParameter("preampgain"):
@@ -112,6 +118,16 @@ class ParamsViewer(QtWidgets.QGroupBox):
             self.ui.EMCCDSlider.setMaximum(gainp.getMaximum())
             self.ui.EMCCDSlider.setValue(gainp.getv())
             self.ui.EMCCDLabel.setText("EMCCD Gain: {0:d}".format(gainp.getv()))
+            self.ui.EMCCDSlider.valueChanged.connect(self.handleGainChange)
+
+        if self.cam_fn.hasParameter("gain"):
+            gainp = self.cam_fn.getParameterObject("gain")
+            self.ui.EMCCDSlider.valueChanged.disconnect()
+            self.ui.EMCCDSlider.setMinimum(gainp.getMinimum())
+            self.ui.EMCCDSlider.setMaximum(gainp.getMaximum())
+            #print("getMin, Max"+ str(gainp.getMinimum()) + ", " + str(gainp.getMaximum()))
+            self.ui.EMCCDSlider.setValue(gainp.getv())
+            self.ui.EMCCDLabel.setText("Gain: {0:d}".format(gainp.getv()))
             self.ui.EMCCDSlider.valueChanged.connect(self.handleGainChange)
 
         if self.cam_fn.isMaster():

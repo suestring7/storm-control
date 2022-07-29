@@ -25,6 +25,7 @@ class CameraFunctionality(halFunctionality.HalFunctionality):
     During a parameter change feed.feed and display.display disconnect
     from camera functionalities and then request new ones.
     """
+    gain = QtCore.pyqtSignal(int)
     emccdGain = QtCore.pyqtSignal(int)
     newFrame = QtCore.pyqtSignal(object)
     parametersChanged = QtCore.pyqtSignal()
@@ -36,6 +37,7 @@ class CameraFunctionality(halFunctionality.HalFunctionality):
     def __init__(self,
                  camera_name = "",
                  have_emccd = False,
+                 have_gain = False,
                  have_preamp = False,
                  have_shutter = False,
                  have_temperature = False,
@@ -49,6 +51,8 @@ class CameraFunctionality(halFunctionality.HalFunctionality):
 
         # This is an EMCCD camera.
         self.have_emccd = have_emccd
+
+        self.have_gain = have_gain
 
         # The camera has adjustable pre-amp gain.
         self.have_preamp = have_preamp
@@ -118,6 +122,9 @@ class CameraFunctionality(halFunctionality.HalFunctionality):
     def hasEMCCD(self):
         return self.have_emccd
 
+    def hasGain(self):
+        return self.have_gain
+
     def hasParameter(self, pname):
         return self.parameters.has(pname)
         
@@ -140,6 +147,9 @@ class CameraFunctionality(halFunctionality.HalFunctionality):
         return self.getParameter("saved")
 
     def setEMCCDGain(self, gain):
+        pass
+
+    def setGain(self, gain):
         pass
 
     def toggleShutter(self):

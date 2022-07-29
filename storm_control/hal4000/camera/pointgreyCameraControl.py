@@ -140,7 +140,7 @@ class PointGreyCameraControl(cameraControl.HWCameraControl):
         # FIXME? If this is too large then the slave will be taking images
         #        at a different rate than master. Maybe this should be
         #        limited? Automatically set based on "master" frame rate?
-        #
+        # # Yuan: it's so surprised here max is before min and I didn't realize it. Took 10+ minutes to figure out = =
         else:
             self.pgrey_props["ExposureTime"] = True
             self.parameters.add(params.ParameterRangeFloat(description = "Exposure time (us)",

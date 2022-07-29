@@ -217,7 +217,7 @@ class FocusLock(halModule.HalModule):
 
         self.control = lockControl.LockControl(configuration = module_params.get("configuration"))
         self.view = FocusLockView(module_name = self.module_name,
-                                  configuration = module_params.get("configuration"))
+                                  configuration = self.configuration)
         self.view.halDialogInit(qt_settings,
                                 module_params.get("setup_name") + " focus lock")
 

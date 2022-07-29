@@ -22,6 +22,9 @@ class RS232(object):
                  port = None,
                  timeout = 1.0e-3,
                  wait_time = 1.0e-2,
+                 bytesize = serial.EIGHTBITS, 
+                 parity = serial.PARITY_NONE, 
+                 stopbits = serial.STOPBITS_ONE,
                  **kwds):
         """
         port - The port for RS-232 communication, e.g. "COM4".
@@ -37,7 +40,7 @@ class RS232(object):
         self.live = True
         self.wait_time = wait_time
         try:
-            self.tty = serial.Serial(port, baudrate, timeout = timeout)
+            self.tty = serial.Serial(port, baudrate, timeout = timeout, bytesize = bytesize, parity = parity, stopbits = stopbits, **kwds)
             self.tty.flush()
             time.sleep(self.wait_time)
         except serial.serialutil.SerialException as e:
