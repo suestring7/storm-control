@@ -28,6 +28,10 @@ def loadThorlabsDLL(thorlabs_dlls):
         # Python 3.8 introduces a new method to specify dll directory
         os.add_dll_directory(thorlabs_dlls)
     except AttributeError:
+<<<<<<< Updated upstream
+=======
+        print("unable to load thorlabs_dlls at path "+thorlabs_dlls)
+>>>>>>> Stashed changes
         pass
 
 # TODO: Use camera ID instead

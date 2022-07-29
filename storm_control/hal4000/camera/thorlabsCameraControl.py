@@ -34,6 +34,10 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
 
         # Load the library and start the camera.
         tcam.loadThorlabsDLL(config.get("thorlabs_dll"))
+<<<<<<< Updated upstream
+=======
+        print("load successfully?")
+>>>>>>> Stashed changes
         self.camera = tcam.cs235mu()
 
         # Dictionary of the Thorlab camera properties we'll support.
@@ -145,9 +149,16 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
                     tmp_range = self.camera.getPropertyValue("gain_range")
                     self.parameters.add(params.ParameterRangeFloat(description = prop,
                                                        name = prop,
+<<<<<<< Updated upstream
                                                        value = tmp_range[0]/10,
                                                        min_value = tmp_range[0]/10,
                                                        max_value = tmp_range[1]/10))
+=======
+                                                       value = tmp_range[0],
+                                                       min_value = tmp_range[0],
+                                                       max_value = tmp_range[1]))
+                    continue
+>>>>>>> Stashed changes
                 elif prop == "exposure_time_us":
                     tmp_range = self.camera.getPropertyValue("exposure_time_range_us")
                 else:
@@ -241,9 +252,16 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
                 elif pname == "biny":
                     self.parameters.setv("y_bin", parameters.get(pname))
                 elif pname == "gain":
+<<<<<<< Updated upstream
                     gainvalue = int(parameters.get(pname)*10)
                     self.camera.setPropertyValue(pname, gainvalue)
                     self.parameters.setv(pname, parameters.get(pname))
+=======
+                    gainvalue = int(parameters.get(pname))
+                    self.camera.setPropertyValue(pname, gainvalue)
+                    self.parameters.setv(pname, parameters.get(pname))
+                    continue
+>>>>>>> Stashed changes
                 elif pname == "roi":
                     # since the camera roi are in pixels of 4, so the first thing is to get the roi value
                     self.camera.setPropertyValue("roi", ROI(parameters.get("x_start"), parameters.get("y_start"), parameters.get("x_end"), parameters.get("y_end")))
