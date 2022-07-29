@@ -107,6 +107,7 @@
       <module_name type="string">storm_control.hal4000.miscControl.TurnkeyMiscControl</module_name>
       <configuration>
         <mirror_turret type="string">cbm</mirror_turret>
+        <filters type="string">DAPI, CFP, GFP, YFP, CY3, TXRED, CY5, CY7</filters>
         <parameters>
           <port type="string">COM4</port>
           <baud_rate type="int">19200</baud_rate>
