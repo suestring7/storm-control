@@ -12,7 +12,7 @@ rem Using call is required here, see: https://stackoverflow.com/questions/246781
 
 call C:\ProgramData\Anaconda3\Scripts\activate.bat %ENVPATH%
 rem Run a python script in that environment
-python C:\Users\turnkey\Documents\GitHub\storm-control\storm_control\hal4000\hal4000.py C:\Users\turnkey\Documents\GitHub\storm-control\storm_control\hal4000\xml\turnkey_config.xml
+python C:\Users\turnkey\Documents\GitHub\storm-control\storm_control\hal4000\hal4000.py C:\Users\turnkey\Documents\GitHub\storm-control\storm_control\hal4000\xml\only_misc.xml
 
 rem Deactivate the environment
 call conda deactivate

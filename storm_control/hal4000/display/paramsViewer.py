@@ -41,11 +41,8 @@ class ParamsViewer(QtWidgets.QGroupBox):
             self.ui.EMCCDSlider.valueChanged.disconnect()
             self.ui.EMCCDSlider.setValue(new_gain)
             self.ui.EMCCDSlider.valueChanged.connect(self.handleGainChange)
-<<<<<<< Updated upstream
-        self.ui.EMCCDLabel.setText("Gain: {0:d}".format(new_gain))
-=======
         self.ui.EMCCDLabel.setText("Gain: {0:.1f}".format(new_gain/10))
->>>>>>> Stashed changes
+
 
     def handleGainChange(self, new_gain):
         if self.cam_fn is not None:
@@ -131,11 +128,7 @@ class ParamsViewer(QtWidgets.QGroupBox):
             self.ui.EMCCDSlider.setMaximum(gainp.getMaximum())
             #print("getMin, Max"+ str(gainp.getMinimum()) + ", " + str(gainp.getMaximum()))
             self.ui.EMCCDSlider.setValue(gainp.getv())
-<<<<<<< Updated upstream
-            self.ui.EMCCDLabel.setText("Gain: {0:d}".format(gainp.getv()))
-=======
             self.ui.EMCCDLabel.setText("Gain: {0:.1f}".format(gainp.getv()/10))
->>>>>>> Stashed changes
             self.ui.EMCCDSlider.valueChanged.connect(self.handleGainChange)
 
         if self.cam_fn.isMaster():

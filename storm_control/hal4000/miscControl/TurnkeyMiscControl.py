@@ -34,21 +34,12 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
     def __init__(self, configuration = None, **kwds):
         super().__init__(**kwds)
         # Add parameters.
-<<<<<<< Updated upstream
         filter_names = configuration.get("filters").split(",")
         self.parameters = params.StormXMLObject()
         self.parameters.add(params.ParameterSetString(description = "Current Filter",
                                                     name = "current_filter",
                                                     value = filter_names[0],
                                                     allowed = filter_names))
-=======
-        self.parameters = params.StormXMLObject()
-        self.parameters.add(params.ParameterString(description = "Filter Names",
-                                                    name = "filter_names", 
-                                                    value = "1,2,3,4,5,6,7,8",
-                                                    is_mutable = False,
-                                                    is_saved = False))
->>>>>>> Stashed changes
 
         self.parameters.add(params.ParameterRangeInt(description = "Filter position", 
                                                     name = "filter_position",
@@ -85,14 +76,9 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
         # setup filter shutter
         self.shutter = self.ui.shutterButton
         self.shutter.clicked.connect(self.handleShutter)
-<<<<<<< Updated upstream
         for i, afilter in enumerate(self.filters):
             afilter.clicked.connect(self.handleFilter)
             afilter.setText(filter_names[i])
-=======
-        for afilter in self.filters:
-            afilter.clicked.connect(self.handleFilter)
->>>>>>> Stashed changes
         if self.filter_wheel:
             self.filters[self.filter_wheel.getPosition()-1].click()
             self.handleShutter()        
@@ -118,11 +104,7 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
                 filter.setStyleSheet("QPushButton { color: red}")
                 if self.filter_wheel:
                     self.filter_wheel.setPosition(i+1)
-<<<<<<< Updated upstream
                 self.parameters.set("filter_position", i)
-=======
-                self.parameters.set("misc.filter_position", i)
->>>>>>> Stashed changes
             else:
                 filter.setStyleSheet("QPushButton { color: black}")
 
@@ -157,20 +139,12 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
 
     def newParameters(self, parameters):
         self.parameters = parameters
-<<<<<<< Updated upstream
-        names = parameters.get("filter_names")
-=======
-        names = parameters.get("misc.filter_names")
->>>>>>> Stashed changes
-        if (len(names) == 8):
-            for i in range(8):
-                self.filters[i].setText(names[i])
+        #names = parameters.get("filter_names")
+        #if (len(names) == 8):
+        #    for i in range(8):
+        #        self.filters[i].setText(names[i])
 
-<<<<<<< Updated upstream
-        self.filters[self.parameters.get("filter_position")].click()
-=======
-        self.filters[self.parameters.get("misc.filter_position")].click()
->>>>>>> Stashed changes
+        self.filters[self.parameters.get("filter_position")-1].click()
 
     def show(self):
         super().show()
