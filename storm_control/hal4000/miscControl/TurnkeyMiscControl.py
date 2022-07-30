@@ -104,7 +104,7 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
                 filter.setStyleSheet("QPushButton { color: red}")
                 if self.filter_wheel:
                     self.filter_wheel.setPosition(i+1)
-                self.parameters.set("filter_position", i)
+                self.parameters.set("filter_position", i+1)
             else:
                 filter.setStyleSheet("QPushButton { color: black}")
 
