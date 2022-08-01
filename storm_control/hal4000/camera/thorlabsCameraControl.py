@@ -352,8 +352,8 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
     def stopFilm(self):
         super().stopFilm()
         #print("STOP_CAMERA")
-        #if self.camera_working:
-        self.camera.setACQMode("run_till_abort")
+        if self.camera_working:
+            self.camera.setACQMode("run_till_abort")
         #print("Set to run_till_abort")
 
     def run(self):
