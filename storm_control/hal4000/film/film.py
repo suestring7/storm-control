@@ -504,6 +504,8 @@ class Film(halModule.HalModule):
                                     film_settings.getBasename(),
                                     notes])
                     msg += "\r\n"
+                    # YT: add the next line to avoid UnicodeEncodeError
+                    msg = str(msg.encode('utf-8'))
                     self.logfile_fp.write(msg)
                     self.logfile_fp.flush()
 
