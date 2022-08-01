@@ -339,7 +339,6 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
         super().startFilm(film_settings, is_time_base)
         if self.camera_working:
             if self.film_length is not None:
-                print("????????????????????")
                 print(self.film_length)
                 if (self.film_length > 1000):
                     self.camera.setACQMode("run_till_abort")
@@ -352,8 +351,10 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
 
     def stopFilm(self):
         super().stopFilm()
-        if self.camera_working:
-            self.camera.setACQMode("run_till_abort")
+        #print("STOP_CAMERA")
+        #if self.camera_working:
+        self.camera.setACQMode("run_till_abort")
+        #print("Set to run_till_abort")
 
     def run(self):
 

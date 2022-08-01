@@ -141,13 +141,14 @@ class cs235mu(object):
         of frames to acquire.
         '''
 
+        #print("cam set ACQ"+ mode)
         self.stopAcquisition()
 
-        if self.acquisition_mode == "fixed_length":
+        if mode == "fixed_length":
             self.acquisition_mode = mode
             self.number_frames = number_frames
             self.setPropertyValue("frames_per_trigger_zero_for_unlimited", number_frames)
-        elif self.acquisition_mode == "run_till_abort":
+        elif mode == "run_till_abort":
             self.acquisition_mode = mode
             self.number_frames = number_frames
             self.setPropertyValue("frames_per_trigger_zero_for_unlimited", 0)
