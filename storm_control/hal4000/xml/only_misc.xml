@@ -104,8 +104,8 @@
 
 
     <misc_control>
-      <class_name type="string">TurnkeyMiscControl</class_name>
-      <module_name type="string">storm_control.hal4000.miscControl.TurnkeyMiscControl</module_name>
+      <class_name type="string">WheelControl</class_name>
+      <module_name type="string">storm_control.hal4000.miscControl.WheelControl</module_name>
       <configuration>
         <mirror_turret type="string">cbm</mirror_turret>
         <filters type="string">DAPI, CFP, GFP, YFP, CY3, TXRED, CY5, CY7</filters>

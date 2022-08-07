@@ -484,8 +484,8 @@ class Film(halModule.HalModule):
                                               value = number_frames))
                 for response in message.getResponses():
                     data = response.getData()
-
                     # Add general parameters 'en-bloc'.
+                    #print(data)
                     if "parameters" in data:
                         to_save.addSubSection(response.source,
                                               svalue = data["parameters"])

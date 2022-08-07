@@ -204,6 +204,9 @@ class SOLAControl(halModule.HalModule):
             if message.getData()["show_gui"]:
                 self.view.showIfVisible()
 
+        elif message.isType("stop film"):
+            message.addResponse(halMessage.HalMessageResponse(source = self.module_name,
+                                                              data = {"parameters" : self.view.getParameters().copy()}))
 # should had nothing to do with start/stop movie for now?
         elif message.isType("tcp message"):
             # See control handles this message.

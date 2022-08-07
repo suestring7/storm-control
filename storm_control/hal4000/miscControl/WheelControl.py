@@ -26,7 +26,7 @@ import storm_control.hal4000.qtdesigner.turnkey_misc_ui as miscControlsUi
 import storm_control.sc_hardware.olympus.ix73cbm as IXCBM
 
 
-class TurnkeyMiscControlView(halDialog.HalDialog):
+class WheelControlView(halDialog.HalDialog):
     """
     Manages the Turnkey GUI
 
@@ -34,12 +34,12 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
     def __init__(self, configuration = None, **kwds):
         super().__init__(**kwds)
         # Add parameters.
-        filter_names = configuration.get("filters").split(",")
+        self.filter_names = configuration.get("filters").split(",")
         self.parameters = params.StormXMLObject()
         self.parameters.add(params.ParameterSetString(description = "Current Filter",
                                                     name = "current_filter",
-                                                    value = filter_names[0],
-                                                    allowed = filter_names))
+                                                    value = self.filter_names[0],
+                                                    allowed = self.filter_names))
 
         self.parameters.add(params.ParameterRangeInt(description = "Filter position", 
                                                     name = "filter_position",
@@ -78,7 +78,7 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
         self.shutter.clicked.connect(self.handleShutter)
         for i, afilter in enumerate(self.filters):
             afilter.clicked.connect(self.handleFilter)
-            afilter.setText(filter_names[i])
+            afilter.setText(self.filter_names[i])
         if self.filter_wheel:
             self.filters[self.filter_wheel.getPosition()-1].click()
             self.handleShutter()        
@@ -104,7 +104,9 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
                 filter.setStyleSheet("QPushButton { color: red}")
                 if self.filter_wheel:
                     self.filter_wheel.setPosition(i+1)
-                self.parameters.set("filter_position", i+1)
+                    self.parameters.setv("filter_position", i+1)
+                    self.parameters.setv("current_filter", self.filter_names[i])
+                    print("current: " + self.filter_names[i])
             else:
                 filter.setStyleSheet("QPushButton { color: black}")
 
@@ -152,13 +154,13 @@ class TurnkeyMiscControlView(halDialog.HalDialog):
 
 
 
-class TurnkeyMiscControl(halModule.HalModule):
+class WheelControl(halModule.HalModule):
 
     def __init__(self, module_params = None, qt_settings = None, **kwds):
         super().__init__(**kwds)
                                                                    
         self.configuration = module_params.get("configuration")    
-        self.view = TurnkeyMiscControlView(module_name = self.module_name,
+        self.view = WheelControlView(module_name = self.module_name,
                                     configuration = self.configuration)
         self.view.halDialogInit(qt_settings,
                                 module_params.get("setup_name") + " Misc control")
@@ -175,8 +177,8 @@ class TurnkeyMiscControl(halModule.HalModule):
     def processMessage(self, message):
         if message.isType("configure1"):
             self.sendMessage(halMessage.HalMessage(m_type = "add to menu",
-                                                   data = {"item name" : "Turnkey",
-                                                           "item data" : "TurnkeyMiscControl"}))
+                                                   data = {"item name" : "Wheel",
+                                                           "item data" : "WheelControl"}))
 
             #self.sendMessage(halMessage.HalMessage(m_type = "get functionality",
             #                                       data = {"name" : self.stage_fn_name}))
@@ -201,14 +203,18 @@ class TurnkeyMiscControl(halModule.HalModule):
                                                               data = {"new parameters" : self.view.getParameters()}))
             
         elif message.isType("show"):
-            if (message.getData()["show"] == "TurnkeyMiscControl"):
+            if (message.getData()["show"] == "WheelControl"):
                 self.view.show()
 
         elif message.isType("start"):
             #self.view.start()
             #self.control.start()
             if message.getData()["show_gui"]:
-                self.view.showIfVisible()
+                self.view.showIfVisible()        
+
+        elif message.isType("stop film"):
+            message.addResponse(halMessage.HalMessageResponse(source = self.module_name,
+                                                              data = {"parameters" : self.view.getParameters().copy()}))
 
 # should had nothing to do with start/stop movie for now?
         elif message.isType("tcp message"):
