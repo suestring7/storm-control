@@ -78,8 +78,10 @@ class IX73_CBM(RS232.RS232):
                 position = 1
             if (position > 8):
                 position = 8
+            print("notcomm")
             self.commWithResp("1MU1 " + str(position))
-            self.waitResponse()
+            #self.waitResponse() #YT: commented 7/10/2023 to avoid stuck when change between setting profiles
+            print("commend")
             self.position = position
 
     def openShutter(self):

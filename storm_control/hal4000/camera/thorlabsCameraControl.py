@@ -18,7 +18,7 @@ from thorlabs_tsi_sdk.tl_camera_enums import *
 
 class ThorlabsCameraControl(cameraControl.HWCameraControl):
     """
-    Interface to a Hamamatsu sCMOS camera.
+    Interface to a Thorlabs camera.
     """
     def __init__(self, config = None, is_master = False, **kwds):
         kwds["config"] = config

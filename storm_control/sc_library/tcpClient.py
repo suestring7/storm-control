@@ -38,7 +38,8 @@ class TCPClient(QtCore.QObject, tcpCommunications.TCPCommunicationsMixin):
         """
         Attempt to establish a connection with the server at the indicated address and port
         """
-        if self.verbose:
+        #if self.verbose:
+        if True:
             print("-"*50)
             string = "Looking for " + self.server_name + " server at: \n"
             string += "    Address: " + self.address.toString() + "\n"

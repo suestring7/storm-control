@@ -38,7 +38,8 @@ class TCPServer(QtNetwork.QTcpServer, tcpCommunications.TCPCommunicationsMixin):
         """
         Listen for new clients.
         """
-        if self.verbose:
+        #if self.verbose:
+        if True:
             string = "Listening for new clients at: \n"
             string += "    Address: " + self.address.toString() + "\n"
             string += "    Port: " + str(self.port)

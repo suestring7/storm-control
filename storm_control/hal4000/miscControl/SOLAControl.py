@@ -210,7 +210,9 @@ class SOLAControl(halModule.HalModule):
 # should had nothing to do with start/stop movie for now?
         elif message.isType("tcp message"):
             # See control handles this message.
-            handled = self.control.handleTCPMessage(message)
+            # TODO: 10/20/2022
+            #handled = self.control.handleTCPMessage(message)
+            handled = False
 
             # If not, check view.
             if not handled:
