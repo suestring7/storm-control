@@ -2,10 +2,10 @@
 <config>
 
   <!-- The starting directory. -->
-  <directory type="directory">C:\Data\Temp\</directory>
+  <directory type="directory">E:/default/</directory>
   
   <!-- The setup name -->
-  <setup_name type="string">blackfly_test</setup_name>
+  <setup_name type="string">thorlabs</setup_name>
 
   <!-- The ui type, this is 'classic' or 'detached' -->
   <ui_type type="string">detached</ui_type>
@@ -63,7 +63,7 @@
 
       <!-- Film parameters specific to this setup go here. -->
       <parameters>
-	<extension desc="Movie file name extension" type="string" values=",Red,Green,Blue"></extension>
+        <extension desc="Movie file name extension" type="string" values=",Red,Green,Blue"></extension>
       </parameters>
     </film>
 
@@ -74,12 +74,14 @@
 
       <!-- List objectives available on this setup here. -->
       <parameters>
-	<flip_horizontal desc="Flip image horizontal (mosaic)" type="boolean">False</flip_horizontal>
-	<flip_vertical desc="Flip image vertical (mosaic)" type="boolean">False</flip_vertical>
-	<transpose desc="Transpose image (mosaic)" type="boolean">False</transpose>
+        <flip_horizontal desc="Flip image horizontal (mosaic)" type="boolean">False</flip_horizontal>
+        <flip_vertical desc="Flip image vertical (mosaic)" type="boolean">False</flip_vertical>
+        <transpose desc="Transpose image (mosaic)" type="boolean">False</transpose>
 
-	<objective desc="Current objective" type="string" values="obj1,obj2,obj3">obj1</objective>
-	<obj1 desc="Objective 1" type="custom">60x,0.120,0.0,0.0</obj1>
+        <objective desc="Current objective" type="string" values="obj1,obj2,obj3">obj1</objective>
+        <obj1 desc="Objective 1" type="custom">60x,0.120,0.0,0.0</obj1>
+        <obj2 desc="Objective 2" type="custom">10x,1.60,0.0,0.0</obj2>
+        <obj3 desc="Objective 3" type="custom">4x,4.0,0.0,0.0</obj3>	
       </parameters>
     </mosaic>
 
@@ -94,7 +96,7 @@
       <class_name type="string">Timing</class_name>
       <module_name type="string">storm_control.hal4000.timing.timing</module_name>
       <parameters>
-	<time_base type="string">camera1</time_base>
+      	<time_base type="string">camera1</time_base>
       </parameters>
     </timing>
   
@@ -110,55 +112,41 @@
 	or "slave" they are timed by another camera. Each time the cameras
 	are started the slave cameras are started first, then the master cameras.
     -->
-
-    <camera1>
+  <camera1>
       <class_name type="string">Camera</class_name>
       <module_name type="string">storm_control.hal4000.camera.camera</module_name>
       <camera>
-	<master type="boolean">True</master>
-	<class_name type="string">PointGreyCameraControl</class_name>
-	<module_name type="string">storm_control.hal4000.camera.pointgreyCameraControl</module_name>
-	<parameters>
-	  <!-- Which camera to use -->
-	  <camera_id type="string">21177886</camera_id>
-	  
-	  <!-- Preset values - camera specific values that are fixed -->
-	  <presets>
-		<!-- FLIR camera general properties -->
-        <PixelFormat type="string">Mono16</PixelFormat> <!-- Mono12Packed/Mono12p -->
-		<ExposureAuto type="string">Off</ExposureAuto>
-		<GainAuto type="string">Off</GainAuto>
-		<BlackLevelClampingEnable type="boolean">False</BlackLevelClampingEnable>
-		
-		<!-- Blackfly specific properties --> 
-		<AcquisitionFrameRateEnable type="boolean">True</AcquisitionFrameRateEnable>
+        <master type="boolean">True</master>
+        <class_name type="string">ThorlabsCameraControl</class_name>
+        <module_name type="string">storm_control.hal4000.camera.thorlabsCameraControl</module_name>
+        <parameters>
+          
+          <!-- The location of the Thorlabs DLL. -->
+<!--           <thorlabs_dll type="string">C:\Users\yxt5273\Downloads\Scientific_Camera_Interfaces_Windows-2.1\Scientific Camera Interfaces\SDK\Python Toolkit\dlls\64_lib</thorlabs_dll>
+-->
+           <thorlabs_dll type="string">C:\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Interfaces\SDK\Python Toolkit\dlls\64_lib</thorlabs_dll>
+<!--
+            C:\Users\yxt5273\Downloads\Scientific_Camera_Interfaces_Windows-2.1\Scientific Camera Interfaces\SDK\Python Toolkit\dlls\64_lib</thorlabs_dll> -->
 
-		<!-- Properties to control relationship between exposure and frame rate -->
-		<CameraControlExposure type="boolean">False</CameraControlExposure>
+          <!-- These are the display defaults, not the camera range. -->
+          <default_max type="int">2000</default_max> 
+          <default_min type="int">100</default_min>
+          <exposure_time_us type="int">100000</exposure_time_us>
+          <flip_horizontal type="boolean">True</flip_horizontal>
+          <flip_vertical type="boolean">False</flip_vertical>
+          <transpose type="boolean">False</transpose>
 
-		<!-- Invalid parameter to test warning --> 
-		<test_parameter type="string">Test Value</test_parameter>
-	  </presets>
-	  
-	  <!-- These are the display defaults, not the camera range. -->
-	  <default_max type="int">200</default_max> 
-	  <default_min type="int">30</default_min>
-	  <flip_horizontal type="boolean">False</flip_horizontal>
-	  <flip_vertical type="boolean">False</flip_vertical>
-	  <transpose type="boolean">True</transpose>
+          <!-- These can be changed / editted. -->
 
-	  <!-- These can be changed / editted. -->
+          <!-- This is the extension to use (if any) when saving data from this camera. -->
+          <extension type="string"></extension>
+          
+          <!-- Whether or not data from this camera is saved during filming. -->
+           <saved type="boolean">True</saved>
 
-	  <!-- This is the extension to use (if any) when saving data from this camera. -->
-	  <extension type="string">c1</extension>
-	  
-	  <!-- Whether or not data from this camera is saved during filming. -->
-	  <saved type="boolean">True</saved>
-
-	</parameters>
+        </parameters>
       </camera>
-    </camera1>
-    
+    </camera1> 
     
   </modules>  
 </config>
