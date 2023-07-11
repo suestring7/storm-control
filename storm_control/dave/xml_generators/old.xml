@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<sequence>
+  <branch name="pass 0">
+    <branch name="conv 0 0">
+      <DAMoveStage>
+        <stage_x type="float">-41.55</stage_x>
+        <stage_y type="float">-141.29</stage_y>
+      </DAMoveStage>
+      <DASetFocusLockTarget>
+        <lock_target type="float">0.0</lock_target>
+      </DASetFocusLockTarget>
+      <DAPause/>
+      <DATakeMovie>
+        <name type="str">conv_0_0</name>
+        <length type="int">5</length>
+      </DATakeMovie>
+    </branch>
+    <branch name="conv 0 1">
+      <DAMoveStage>
+        <stage_x type="float">576.92</stage_x>
+        <stage_y type="float">-208.81</stage_y>
+      </DAMoveStage>
+      <DASetFocusLockTarget>
+        <lock_target type="float">0.0</lock_target>
+      </DASetFocusLockTarget>
+      <DATakeMovie>
+        <name type="str">conv_0_1</name>
+        <length type="int">5</length>
+      </DATakeMovie>
+    </branch>
+  </branch>
+</sequence>
