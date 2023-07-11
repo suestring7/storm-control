@@ -561,7 +561,7 @@ class HalCore(QtCore.QObject):
         the modules.
         """
         for module in self.modules:
-            print(module)
+            #print(module)
             m_child = module.findChild(qt_type, name, options)
             if m_child is not None:
                 return m_child

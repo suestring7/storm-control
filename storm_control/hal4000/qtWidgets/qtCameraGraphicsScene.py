@@ -147,9 +147,12 @@ class QtCameraGraphicsItem(QtWidgets.QGraphicsItem):
         #
         w = frame.image_x
         h = frame.image_y
+        
         image_data = frame.getData()
         try:
             image_data = image_data.reshape((h,w))
+            print("try:")
+            print(len(image_data[0]))
         except ValueError as e:
             print("Got an image with an unexpected size, ", image_data.shape, "expected [", w, ",", h, "]")
             return
@@ -159,6 +162,7 @@ class QtCameraGraphicsItem(QtWidgets.QGraphicsItem):
             max_intensity = None
 
         # Rescale the image & record it's minimum and maximum.
+        print(image_data)
         [temp, self.image_min, self.image_max] = c_image.rescaleImage(image_data,
                                                                       False,
                                                                       False,

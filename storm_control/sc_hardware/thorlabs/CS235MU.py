@@ -22,7 +22,7 @@ import queue
 
 
 def loadThorlabsDLL(thorlabs_dlls):
-    #thorlabs_dlls = r"C:\Users\yxt5273\Downloads\Scientific_Camera_Interfaces_Windows-2.1\Scientific Camera Interfaces\SDK\Python Toolkit\dlls\64_lib"
+    thorlabs_dlls = r"C:\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Interfaces\SDK\Python Toolkit\dlls\64_lib"
     os.environ['PATH'] = thorlabs_dlls + os.pathsep + os.environ['PATH']
     try:
         # Python 3.8 introduces a new method to specify dll directory
@@ -90,7 +90,9 @@ class cs235mu(object):
                    "usb_port_type" : False,         # USB_PORT_TYPE
                    }
         self.setPropertyValue("operation_mode", OPERATION_MODE.SOFTWARE_TRIGGERED)
-        self.vshutter = False
+
+        self.setPropertyValue("roi",ROI(0,0,600,600))
+        self.vshutter = True
         self.printFullInfo()
 
     def printFullInfo(self):
@@ -162,8 +164,15 @@ class cs235mu(object):
         """
         # Start acquisition.
         # TODO: does the arm number really make any difference? 
-        self.camera.arm(2)
+        if self.vshutter:
+            self.camera.disarm()
+            self.camera.arm(2)
+            self.vshutter = False
         self.frame_size = [self.getPropertyValue("image_width_pixels"), self.getPropertyValue("image_height_pixels")]
+        # YT 7/11/2023
+        print("------------------------------")
+        print(self.getPropertyValue("image_width_pixels"), self.getPropertyValue("image_height_pixels"))
+        print(self.getPropertyValue("roi"))
 
         if self.vshutter:
             pass
@@ -203,7 +212,7 @@ class cs235mu(object):
         else:
             # Stop acquisition.
             self.camera.disarm()
-
+            self.vshutter = True
             #print("max camera backlog was", self.max_backlog, "of", self.number_image_buffers)
             #self.max_backlog = 0
 
@@ -213,7 +222,10 @@ class cs235mu(object):
  
     def shutdown(self):
         self.closeShutter()
-        self.camera.disarm()
+        if self.vshutter:
+            pass
+        else:
+            self.camera.disarm()
         #self.camera.dispose()
 
 
@@ -254,17 +266,17 @@ if (__name__ == "__main__"):
         # List support properties.
         if False:
             print("Supported properties:")
-            props = hcam.getProperties()
+            props = tcam.getProperties()
             for i, id_name in enumerate(sorted(props.keys())):
                 [p_value, p_type] = hcam.getPropertyValue(id_name)
-                p_rw = hcam.getPropertyRW(id_name)
+                p_rw = tcam.getPropertyRW(id_name)
                 read_write = ""
                 if (p_rw[0]):
                     read_write += "read"
                 if (p_rw[1]):
                     read_write += ", write"
                 print("  ", i, ")", id_name, " = ", p_value, " type is:", p_type, ",", read_write)
-                text_values = hcam.getPropertyText(id_name)
+                text_values = tcam.getPropertyText(id_name)
                 if (len(text_values) > 0):
                     print("          option / value")
                     for key in sorted(text_values, key = text_values.get):
@@ -272,19 +284,19 @@ if (__name__ == "__main__"):
 
         # Test setting & getting some parameters.
         if False:
-            print(hcam.setPropertyValue("exposure_time", 0.001))
+            print(tcam.setPropertyValue("exposure_time", 0.001))
 
             #print(hcam.setPropertyValue("subarray_hsize", 2048))
             #print(hcam.setPropertyValue("subarray_vsize", 2048))
-            print(hcam.setPropertyValue("subarray_hpos", 512))
-            print(hcam.setPropertyValue("subarray_vpos", 512))
-            print(hcam.setPropertyValue("subarray_hsize", 1024))
-            print(hcam.setPropertyValue("subarray_vsize", 1024))
+            print(tcam.setPropertyValue("subarray_hpos", 512))
+            print(tcam.setPropertyValue("subarray_vpos", 512))
+            print(tcam.setPropertyValue("subarray_hsize", 1024))
+            print(tcam.setPropertyValue("subarray_vsize", 1024))
 
-            print(hcam.setPropertyValue("binning", "1x1"))
-            print(hcam.setPropertyValue("readout_speed", 2))
+            print(tcam.setPropertyValue("binning", "1x1"))
+            print(tcam.setPropertyValue("readout_speed", 2))
     
-            hcam.setSubArrayMode()
+            tcam.setSubArrayMode()
             #hcam.startAcquisition()
             #hcam.stopAcquisition()
 
@@ -302,12 +314,12 @@ if (__name__ == "__main__"):
             #                      "subarray_vsize",
             #                      "binning"]
             for param in params:
-                print(param, hcam.getPropertyValue(param)[0])
+                print(param, tcam.getPropertyValue(param)[0])
 
         # Test 'run_till_abort' acquisition.
         if False:
             print("Testing run till abort acquisition")
-            hcam.startAcquisition()
+            tcam.startAcquisition()
             cnt = 0
             for i in range(300):
                 [frames, dims] = hcam.getFrames()
@@ -316,7 +328,10 @@ if (__name__ == "__main__"):
                     cnt += 1
 
             print("Frames acquired: " + str(cnt))    
-            hcam.stopAcquisition()
+            tcam.stopAcquisition()
+        if True:
+            tcam.startAcquisition()
+
 
         # Test 'fixed_length' acquisition.
         if True:

@@ -396,6 +396,9 @@ class CameraFrameViewer(QtWidgets.QFrame):
         self.camera_widget.setClickPos(*self.cam_fn.transformChipToFrame(cx, cy))
 
     def handleNewFrame(self, frame):
+        # YT: 7/11
+        print("handleNewFrame")
+        print(frame)
         if self.filming and (self.getParameter("sync") != 0):
             if((frame.frame_number % self.cycle_length) == (self.getParameter("sync") - 1)):
                 self.frame = frame

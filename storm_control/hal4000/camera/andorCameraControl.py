@@ -196,13 +196,13 @@ class AndorCameraControl(cameraControl.HWCameraControl):
             if running:
                 self.stopCamera()
 
-            if self.reversed_shutter:
-                self.camera.openShutter()
-            else:
-                self.camera.closeShutter()
+            # if self.reversed_shutter:
+            #     self.camera.openShutter()
+            # else:
+            #     self.camera.closeShutter()
 
-            if running:
-                self.startCamera()
+            # if running:
+            #     self.startCamera()
 
     def getTemperature(self):
         if self.camera_working:
@@ -369,16 +369,16 @@ class AndorCameraControl(cameraControl.HWCameraControl):
         super().openShutter()
         if self.camera_working:
             running = self.running
-            if running:
-                self.stopCamera()
+            # if running:
+            #     self.stopCamera()
 
-            if self.reversed_shutter:
-                self.camera.closeShutter()
-            else:
-                self.camera.openShutter()
+            # if self.reversed_shutter:
+            #     self.camera.closeShutter()
+            # else:
+            #     self.camera.openShutter()
 
-            if running:
-                self.startCamera()
+            # if running:
+            #     self.startCamera()
 
     def setEMCCDGain(self, gain):
         super().setEMCCDGain(gain)

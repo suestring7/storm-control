@@ -24,6 +24,8 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
         kwds["config"] = config
         super().__init__(**kwds)
 
+
+        self.reversed_shutter = config.get("reversed_shutter", False)
         # The camera configuration.
         self.camera_functionality = cameraFunctionality.CameraFunctionality(camera_name = self.camera_name,
                                                                             have_gain = True,
@@ -191,8 +193,8 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
 
 
         ## Disable editing of the HAL versions of these parameters.
-        for param in ["x_bin", "x_end", "x_start", "y_end", "y_start", "y_bin"]:
-            self.parameters.getp(param).setMutable(False)
+        #for param in ["x_bin", "x_end", "x_start", "y_end", "y_start", "y_bin"]:
+        #    self.parameters.getp(param).setMutable(False)
 
         self.newParameters(self.parameters, initialization = True)
 
@@ -247,8 +249,16 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
                     self.parameters.setv(pname, parameters.get(pname))
                     continue
                 elif pname == "roi":
+                    # YT:7/11 look for a quick and dirty fix
+                    # pass
+                    print("change ROI")
+                    print(parameters.get("x_start"), parameters.get("y_start"), parameters.get("x_end"), parameters.get("y_end"))
                     # since the camera roi are in pixels of 4, so the first thing is to get the roi value
-                    self.camera.setPropertyValue("roi", ROI(parameters.get("x_start"), parameters.get("y_start"), parameters.get("x_end"), parameters.get("y_end")))
+                    #self.camera.setPropertyValue("roi", ROI(parameters.get("x_start"), parameters.get("y_start"), parameters.get("x_end"), parameters.get("y_end")))
+
+                    # YT: 7/11 dirty fix
+                    self.camera.setPropertyValue("roi", ROI(660,300,1260,900))
+                    print(parameters.get("x_end"))
                     tmp_roi = self.camera.getPropertyValue("roi")
                     parameters.setv("x_start", tmp_roi[0])
                     parameters.setv("y_start", tmp_roi[1])
@@ -280,40 +290,50 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
             self.parameters.setv("bytes_per_frame", 2 * size_x * size_y)
             if running:
                 self.startCamera()
-                
+            
+            self.camera_functionality.toggleShutter = self.toggleShutter
             self.camera_functionality.parametersChanged.emit()
 
     def closeShutter(self):
-        print("!closeShutter")
         super().closeShutter()
         if self.camera_working:
-            running = self.running
-            if running:
-                self.stopCamera()
-
-            if self.reversed_shutter:
-                self.camera.openShutter()
+            if self.camera.vshutter:
+                pass
             else:
-                self.camera.closeShutter()
+                self.stopCamera()
+                self.camera.vshutter = True
+                self.running = False
+            # running = self.running
+            # if running:
+            #     self.stopCamera()
 
-            if running:
-                self.startCamera()
+            # if self.reversed_shutter:
+            #     self.camera.openShutter()
+            # else:
+            #     self.camera.closeShutter()
+
+            # if running:
+            #     self.startCamera()
 
     def openShutter(self):
-        print("!openShutter")
         super().openShutter()
         if self.camera_working:
-            running = self.running
-            if running:
-                self.stopCamera()
-
-            if self.reversed_shutter:
-                self.camera.closeShutter()
-            else:
-                self.camera.openShutter()
-
-            if running:
+            if self.camera.vshutter:
                 self.startCamera()
+                self.camera.vshutter = False
+                self.running = True
+            
+            # running = self.running
+            # if running:
+            #     self.stopCamera()
+
+            # if self.reversed_shutter:
+            #     self.camera.closeShutter()
+            # else:
+            #     self.camera.openShutter()
+
+            # if running:
+            #     self.startCamera()
 
     def setGain(self, gain):
         super().setGain(gain)
@@ -329,11 +349,18 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
 
     def startCamera(self):
         super().startCamera()
-        #self.camera.camera.arm(2)
+        if self.camera.vshutter:
+            self.camera.camera.disarm()
+            self.camera.camera.arm(2)
+            self.camera.vshutter = False
 
     def stopCamera(self):
         super().stopCamera()
-        #self.camera.camera.disarm()
+        if self.camera.vshutter:
+            pass
+        else:
+            self.camera.camera.disarm()
+            self.camera.vshutter = True
 
     def startFilm(self, film_settings, is_time_base):
         super().startFilm(film_settings, is_time_base)
@@ -363,6 +390,8 @@ class ThorlabsCameraControl(cameraControl.HWCameraControl):
         #       only then set self.running. Otherwise HAL might think the
         #       camera is running when it is not.
         #
+        # YT: 7/11
+        print("Am I only be called once?")
         self.camera.startAcquisition()
         self.running = True
         self.thread_started = True
