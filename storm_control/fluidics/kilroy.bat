@@ -1,2 +1,4 @@
 rem Activate virtual environment and start Dave.
-c:\users\hazen\pyenv\hal2\scripts\activate && python kilroy.py kilroy_settings_hbaic1.xml
+conda activate storm
+python kilroy.py kilroy_settings_hbaic1.xml
+python C:\Users\STORM1\Documents\GitHub\storm-control\storm_control\fluidics\kilroy.py C:\Users\STORM1\Documents\GitHub\storm-control\storm_control\fluidics\kilroy_settings_default.xml

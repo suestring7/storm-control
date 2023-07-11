@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<sequence>
+  
+
+  <DASetDirectory>
+    <directory type="str">D:\default\test_dave</directory>
+  </DASetDirectory>
+  <branch name="Movie Loop">
+    <branch name="conv_0">
+      <DAMoveStage>
+        <stage_x type="float">-41.55</stage_x>
+        <stage_y type="float">-141.29</stage_y>
+      </DAMoveStage>
+      <DASetParameters>
+        <parameters type="str">10HZ_256x256_488</parameters>
+      </DASetParameters>
+      <DADelay>
+        <delay type="int">0</delay>
+      </DADelay>
+      <DATakeMovie>
+        <name type="str">conv_0</name>
+        <length type="int">20</length>
+        <parameters type="str">10HZ_256x256_488</parameters>
+        <overwrite type="bool">False</overwrite>
+      </DATakeMovie>
+    </branch>
+    <branch name="bleach">
+      <DAMoveStage>
+        <stage_x type="float">-41.55</stage_x>
+        <stage_y type="float">-141.29</stage_y>
+      </DAMoveStage>
+      <DASetParameters>
+        <parameters type="str">110HZ_256x256_AF647</parameters>
+      </DASetParameters>
+      <DATakeMovie>
+        <name type="str">bleach</name>
+        <length type="int">20</length>
+        <parameters type="str">110HZ_256x256_AF647</parameters>
+        <overwrite type="bool">False</overwrite>
+      </DATakeMovie>
+    </branch>
+    <branch name="storm">
+      <DAMoveStage>
+        <stage_x type="float">-41.55</stage_x>
+        <stage_y type="float">-141.29</stage_y>
+      </DAMoveStage>
+      <DASetParameters>
+        <parameters type="str">110HZ_256x256_AF647</parameters>
+      </DASetParameters>
+      <DATakeMovie>
+        <name type="str">storm</name>
+        <length type="int">1000</length>
+        <parameters type="str">110HZ_256x256_AF647</parameters>
+        <overwrite type="bool">False</overwrite>
+      </DATakeMovie>
+    </branch>
+    <branch name="conv_1">
+      <DAMoveStage>
+        <stage_x type="float">576.92</stage_x>
+        <stage_y type="float">-208.81</stage_y>
+      </DAMoveStage>
+      <DASetParameters>
+        <parameters type="str">10HZ_256x256_488</parameters>
+      </DASetParameters>
+      <DADelay>
+        <delay type="int">0</delay>
+      </DADelay>
+      <DATakeMovie>
+        <name type="str">conv_1</name>
+        <length type="int">20</length>
+        <parameters type="str">10HZ_256x256_488</parameters>
+        <overwrite type="bool">False</overwrite>
+      </DATakeMovie>
+    </branch>
+    <branch name="bleach">
+      <DAMoveStage>
+        <stage_x type="float">576.92</stage_x>
+        <stage_y type="float">-208.81</stage_y>
+      </DAMoveStage>
+      <DASetParameters>
+        <parameters type="str">110HZ_256x256_AF647</parameters>
+      </DASetParameters>
+      <DATakeMovie>
+        <name type="str">bleach</name>
+        <length type="int">20</length>
+        <parameters type="str">110HZ_256x256_AF647</parameters>
+        <overwrite type="bool">False</overwrite>
+      </DATakeMovie>
+    </branch>
+    <branch name="storm">
+      <DAMoveStage>
+        <stage_x type="float">576.92</stage_x>
+        <stage_y type="float">-208.81</stage_y>
+      </DAMoveStage>
+      <DASetParameters>
+        <parameters type="str">110HZ_256x256_AF647</parameters>
+      </DASetParameters>
+      <DATakeMovie>
+        <name type="str">storm</name>
+        <length type="int">1000</length>
+        <parameters type="str">110HZ_256x256_AF647</parameters>
+        <overwrite type="bool">False</overwrite>
+      </DATakeMovie>
+    </branch>
+  </branch>
+</sequence>

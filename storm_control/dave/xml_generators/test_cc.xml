@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<recipe>
+	<command_sequence>
+		<loop name = "Hybridize Loop">
+			<variable_entry name = "Hybridize Loop"></variable_entry>
+			<valve_protocol>Flow Image Buffer</valve_protocol>
+			<loop name = "Movie Loop 1">
+				<movie>
+					<name increment = "Yes">Hal_config_750s5_650s5_560s5_488s1_405s1</name>
+					<length>17</length>
+					<parameters>Hal_config_750s5_650s5_560s5_488s1_405s1</parameters>		
+					<check_focus>
+						<num_focus_checks>100</num_focus_checks>
+						<focus_scan/> 
+                        
+						<min_sum>80</min_sum> 
+					</check_focus>                 
+					<overwrite>False</overwrite>
+					<variable_entry name = "Movie Loop 1"></variable_entry>
+				</movie>             
+			</loop>
+			<valve_protocol>Cleave</valve_protocol>
+		</loop>
+		<valve_protocol>Flow SSC</valve_protocol>
+	</command_sequence>
+	
+	<loop_variable name = "Movie Loop 1">
+		<file_path></file_path>
+	</loop_variable>
+	
+	<loop_variable name = "Hybridize Loop">
+		<value><valve_protocol>Flow Image Buffer</valve_protocol></value>
+		<value><valve_protocol>Hybridize 1</valve_protocol></value>
+		<value><valve_protocol>Hybridize 2</valve_protocol></value>
+        <value><valve_protocol>Hybridize 3</valve_protocol></value>
+        <value><valve_protocol>Hybridize 4</valve_protocol></value>
+        <value><valve_protocol>Hybridize 5</valve_protocol></value>
+        <value><valve_protocol>Hybridize 6</valve_protocol></value>
+        <value><valve_protocol>Hybridize 7</valve_protocol></value>
+        <value><valve_protocol>Hybridize 8</valve_protocol></value>
+		<value><valve_protocol>Hybridize 9</valve_protocol></value>
+		<value><valve_protocol>Hybridize 10</valve_protocol></value>
+		<value><valve_protocol>Hybridize 11</valve_protocol></value>
+		<value><valve_protocol>Hybridize 12</valve_protocol></value>
+		<value><valve_protocol>Hybridize 13</valve_protocol></value>
+		<value><valve_protocol>Hybridize 14</valve_protocol></value>
+		<value><valve_protocol>Hybridize 15</valve_protocol></value>
+		<value><valve_protocol>Hybridize 16</valve_protocol></value>
+		<value><valve_protocol>Hybridize 1</valve_protocol></value>
+	</loop_variable>
+	
+</recipe>
