@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<kilroy_configuration num_valves = "3" num_pumps = "1">
+
+  <valve_commands>
+    <valve_cmd name = "Wash Buffer">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "8"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "STORM Buffer">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "7"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Stop">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "8"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 1">
+      <valve_pos valve_ID = "1" port_ID = "1"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 2">
+      <valve_pos valve_ID = "1" port_ID = "2"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 3">
+      <valve_pos valve_ID = "1" port_ID = "3"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 4">
+      <valve_pos valve_ID = "1" port_ID = "4"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 5">
+      <valve_pos valve_ID = "1" port_ID = "5"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 6">
+      <valve_pos valve_ID = "1" port_ID = "6"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 7">
+      <valve_pos valve_ID = "1" port_ID = "7"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 8">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "1"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 9">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "2"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 10">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "3"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 11">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "4"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 12">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "5"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 13">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "6"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 14">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "7"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 15">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "1"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 16">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "2"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 17">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "3"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 18">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "4"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 19">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "5"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 20">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "6"></valve_pos>
+    </valve_cmd>
+  </valve_commands>
+
+  <pump_commands>
+     <pump_cmd name = "0.6 mL/min">
+       <pump_config speed = "43.00" direction = "Forward"></pump_config>
+     </pump_cmd>
+     <pump_cmd name = "Stop Flow">
+       <pump_config speed = "0.0"></pump_config>
+     </pump_cmd>
+  </pump_commands>
+
+  <kilroy_protocols>
+
+     <protocol name = "Flow STORM Buffer">
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>    
+ 
+     <protocol name = "Flow Wash Buffer">
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>  
+
+     <protocol name = "Hybridize 0">
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 1">
+        <valve duration = "1">Set Hyb 1</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 2">
+        <valve duration = "1">Set Hyb 2</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 3">
+        <valve duration = "1">Set Hyb 3</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 4">
+        <valve duration = "1">Set Hyb 4</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 5">
+        <valve duration = "1">Set Hyb 5</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 6">
+        <valve duration = "1">Set Hyb 6</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 7">
+        <valve duration = "1">Set Hyb 7</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 8">
+        <valve duration = "1">Set Hyb 8</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 9">
+        <valve duration = "1">Set Hyb 9</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 10">
+        <valve duration = "1">Set Hyb 10</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 11">
+        <valve duration = "1">Set Hyb 11</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 12">
+        <valve duration = "1">Set Hyb 12</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 13">
+        <valve duration = "1">Set Hyb 13</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 14">
+        <valve duration = "1">Set Hyb 14</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 15">
+        <valve duration = "1">Set Hyb 15</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 16">
+        <valve duration = "1">Set Hyb 16</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 17">
+        <valve duration = "1">Set Hyb 17</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 18">
+        <valve duration = "1">Set Hyb 18</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 19">
+        <valve duration = "1">Set Hyb 19</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Hybridize 20">
+        <valve duration = "1">Set Hyb 20</valve>
+        <pump duration = "250">0.6 mL/min</pump>
+	<pump duration = "1800">Stop Flow</pump>
+        <valve duration = "1">Wash Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "30">Stop Flow</pump>
+        <valve duration = "1">STORM Buffer</valve>
+        <pump duration = "150">0.6 mL/min</pump>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+     <protocol name = "Cleanup">
+        <pump duration = "1">0.6 mL/min</pump>
+        <valve duration = "180">Set Hyb 1</valve>
+	<valve duration = "180">Set Hyb 2</valve>
+	<valve duration = "180">Set Hyb 3</valve>
+	<valve duration = "180">Set Hyb 4</valve>
+        <valve duration = "180">Set Hyb 5</valve>
+        <valve duration = "180">Set Hyb 6</valve>
+        <valve duration = "180">Set Hyb 7</valve>
+        <valve duration = "180">Set Hyb 8</valve>
+        <valve duration = "180">Set Hyb 9</valve>
+        <valve duration = "180">Set Hyb 10</valve>
+        <valve duration = "180">Set Hyb 11</valve>
+        <valve duration = "180">Set Hyb 12</valve>
+        <valve duration = "180">Set Hyb 13</valve>
+        <valve duration = "180">Set Hyb 14</valve>
+        <valve duration = "180">Set Hyb 15</valve>
+        <valve duration = "180">Set Hyb 16</valve>
+        <valve duration = "180">Set Hyb 17</valve>
+        <valve duration = "180">Set Hyb 18</valve>
+        <valve duration = "180">Set Hyb 19</valve>
+        <valve duration = "180">Set Hyb 20</valve>
+        <valve duration = "180">STORM Buffer</valve>
+        <valve duration = "180">Wash Buffer</valve>
+	<pump duration = "10">Stop Flow</pump>
+     </protocol>
+
+   </kilroy_protocols>
+
+</kilroy_configuration>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<kilroy_configuration num_valves = "4" num_pumps = "1">
+  <valve_commands>
+    <valve_cmd name = "Wash Buffer">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "8"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Imaging Buffer">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "7"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Stop">
+      <valve_pos valve_ID = "1" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "2" port_ID = "8"></valve_pos>
+      <valve_pos valve_ID = "3" port_ID = "8"></valve_pos>
+    </valve_cmd>
+    <valve_cmd name = "Set Hyb 1">
+      <valve_pos valve_ID = "1" port_ID = "1"></valve_pos>
+    </valve_cmd>
+  </valve_commands>
+
+  <pump_commands>
+     <pump_cmd name = "0.6 mL/min">
+       <pump_config speed = "43.00" direction = "Forward"></pump_config>
+     </pump_cmd>
+     <pump_cmd name = "Stop Flow">
+       <pump_config speed = "0.0"></pump_config>
+     </pump_cmd>
+  </pump_commands>
+
+	<kilroy_protocols>
+
+		<protocol name = "Flow first readout probe">
+			<valve duration = "1">Set buffer 1</valve>
+			<!-- 2mL across the sample at flow rate of 0.5mL/min, 4min -->
+			<pump duration = "30">32 rpm</pump>
+			<!-- stop flow and incubate the sample for 15min -->
+			<pump duration = "10">Stop Flow</pump>
+		</protocol>    
+
+		<protocol name = "Flow buffer 2">
+			<valve duration = "1">Set buffer 2</valve>
+			<pump duration = "30">32 rpm</pump>
+			<pump duration = "10">Stop Flow</pump>
+		</protocol>   
+
+		<protocol name = "Clean up">
+			<pump duration = "1">32 rpm</pump>
+			<valve duration = "120">Set buffer 3</valve>
+			<pump duration = "10">Stop Flow</pump>
+		</protocol> 
+
+
+	</kilroy_protocols>
+</kilroy_configuration>
+
+<!-- C:\Users\yxt5273>python C:\Users\yxt5273\Documents\GitHub\storm-control\storm_control\fluidics\kilroy.py C:\Users\yxt5273\Documents\GitHub\storm-control\storm_control\fluidics\kilroy_settings_default.xml -->
