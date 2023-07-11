@@ -80,7 +80,7 @@ class PointGreyLockCamera(hardwareModule.HardwareModule):
         elif (configuration.get("single_spot", False)):
             self.camera = pointGreyLockCamera.SSLockCamera(camera_id = configuration.get("camera_id"),
                                                            parameters = configuration.get("camera_parameters"))            
-
+        print("I am using a pointGreyLockCamera")
         self.camera_functionality = PGQPDAutoFocusFunctionality(camera = self.camera,
                                                                 parameters = configuration.get("parameters"),
                                                                 units_to_microns = configuration.get("units_to_microns"))
