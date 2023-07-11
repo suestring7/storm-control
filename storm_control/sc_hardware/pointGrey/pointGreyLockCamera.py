@@ -9,7 +9,7 @@ import time
 from PyQt5 import QtCore
 
 import storm_control.sc_hardware.utility.af_lock_c as afLC
-import storm_control.sc_hardware.utility.sa_lock_peak_finder as slpf
+import storm_control.sc_hardware.utility.np_lock_peak_finder as slpf
 
 import storm_control.sc_hardware.pointGrey.spinnaker as spinnaker
 
