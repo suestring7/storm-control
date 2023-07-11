@@ -313,6 +313,14 @@ class CameraControl(QtCore.QThread):
         self.parameters.set("emccd_gain", gain)
         self.camera_functionality.emccdGain.emit(gain)
         
+    def setGain(self, gain):
+        """
+        Cameras that have EMCCD gain should override this. This method must 
+        also set the 'emccd_gain' parameter.
+        """
+        self.parameters.set("gain", gain)
+        self.camera_functionality.gain.emit(gain)
+        
     def startCamera(self):
 
         # Update the camera temperature, if available.
