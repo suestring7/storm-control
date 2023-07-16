@@ -286,8 +286,6 @@ class AndorCamera:
         andorCheck(andor.GetMaximumExposure(ctypes.byref(max_exp)), "GetMaximumExposure")
         self._props_["MaxExposure"] = max_exp.value
 
-        # YT: Since our camera doesn't have a physical shutter, here we put a virtual one.
-        self.vshutter = True
 
     #
     # Helper functions.
@@ -319,7 +317,15 @@ class AndorCamera:
     #
     # Close the camera shutter. This will abort the current acquisition.
     def closeShutter(self):
-        self.vshutter = True
+        setCurrentCamera(self.camera_handle)
+        self._abortIfAcquiring_()
+        status = andor.SetShutterEx(1, 2, 0, 0, 2)
+        #print("IS internal mechanical shutter?")
+        #number = ctypes.c_int()
+        #andorCheck(andor.IsInternalMechanicalShutter(ctypes.byref(number)), "IsInternalMechanicalShutter")
+        #print(number)
+        if (status != drv_success):
+            print("SetShutter (closed) failed: ", status)
 
     ## coolerOff
     #
@@ -719,7 +725,11 @@ class AndorCamera:
     # Open the camera shutter. This will abort the current acquisition.
     #
     def openShutter(self):
-        self.vshutter = False
+        setCurrentCamera(self.camera_handle)
+        self._abortIfAcquiring_()
+        status = andor.SetShutterEx(1, 1, 0, 0, 1)
+        if (status != drv_success):
+            print("SetShutter (open) failed: ", status)
         
 
     ## setACQMode
@@ -1082,22 +1092,16 @@ class AndorCamera:
     # Start the acquisition.
     #
     def startAcquisition(self):
-        if self.vshutter:
-            pass
-        else:
-            setCurrentCamera(self.camera_handle)
-            andorCheck(andor.StartAcquisition(), "StartAcquisition")
+        setCurrentCamera(self.camera_handle)
+        andorCheck(andor.StartAcquisition(), "StartAcquisition")
 
     ## stopAcquisition
     #
     # Stop the acquisition.
     #
     def stopAcquisition(self):
-        if self.vshutter:
-            pass
-        else:
-            setCurrentCamera(self.camera_handle)
-            self._abortIfAcquiring_()
+        setCurrentCamera(self.camera_handle)
+        self._abortIfAcquiring_()
 
 
 #
