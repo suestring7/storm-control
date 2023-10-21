@@ -406,9 +406,10 @@ class PVCAMCamera(object):
         self.n_captured.value = 0
         self.n_processed = 0
 
+        # Yuan 10/20/23 fix "int too long to convert by adding ctypes.c_int64"
         # Start the acquisition.
         check(pvcam.pl_exp_start_cont(self.hcam,
-                                      self.data_buffer.ctypes.data,
+                                      ctypes.c_int64(self.data_buffer.ctypes.data),
                                       pvc.uns32(self.data_buffer.size)),
               "pl_exp_start_cont")
 
@@ -453,7 +454,7 @@ if (__name__ == "__main__"):
     import tifffile
     import time
 
-    loadPVCAMDLL("c:\Windows\System32\pvcam64.dll")
+    loadPVCAMDLL(r"c:\Windows\System32\pvcam64.dll")
 
     initPVCAM()
 
