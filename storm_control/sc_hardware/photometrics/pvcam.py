@@ -146,9 +146,11 @@ class PVCAMCamera(object):
                                       pvc.int16(pvc.CIRC_OVERWRITE)),
               "pl_exp_setup_cont")
 
+        # self.frame_bytes = (x_end - x_start + 1)*(y_end - y_start + 1)*2
         # Store frame size in bytes.
-        #
+        # Yuan Tao
         self.frame_bytes = frame_size.value
+        print(self.frame_bytes)
 
         # Allocate storage for the frames. Use PVCAM's recommendation for the size.
         #
@@ -173,6 +175,7 @@ class PVCAMCamera(object):
                                                 ctypes.byref(data_ptr)),
                   "pl_exp_get_oldest_frame")
 
+
             pv_data = PVCAMFrameData(self.frame_bytes)
             pv_data.copyData(data_ptr)
             frames.append(pv_data)
@@ -181,7 +184,6 @@ class PVCAMCamera(object):
                   "pl_exp_unlock_oldest_frame")
 
             self.n_processed += 1
-            
         return [frames, [self.frame_x, self.frame_y]]
         
     def getParam(self, pid, value, attrib):
@@ -476,7 +478,7 @@ if (__name__ == "__main__"):
                 print("  not available.")
 
     # Test querying the number of ports and readout speeds.
-    if True:
+    if False:
         print("querying ports and speeds.")
         n_ports = cam.getParameterCount("param_readout_port")
         print("Number of ports", n_ports)
@@ -489,8 +491,10 @@ if (__name__ == "__main__"):
             for j in range(n_speeds):
                 print("    speed", j)
                 cam.setParameter("param_spdtab_index", j)
-                for param in ["param_bit_depth", "param_pix_time", "param_gain_index"]:
-                    print("      ", i, j, param, "=", cam.getParameterCurrent(param))
+                for k in range(cam.getParameterCount("param_gain_index")):
+                    cam.setParameter("param_gain_index", k+1)
+                    for param in ["param_spdtab_index", "param_bit_depth", "param_pix_time", "param_gain_index"]:
+                        print("      ", i, j, k+1, param, "=", cam.getParameterCurrent(param))
 
     # Test querying speed / bit depth.
     if False:
@@ -504,13 +508,13 @@ if (__name__ == "__main__"):
         print(cam.getParameterCurrent("param_metadata_enabled"))
 
     # Test acquisition.
-    if False:
+    if True:
 
         x_size = 1024
         y_size = 1024
         
         # Configure acquisition, x_size by y_size, X millisecond exposure.
-        cam.captureSetup(0, x_size - 1, 1, 0, y_size - 1, 1, 100)
+        cam.captureSetup(0, x_size - 1, 2, 0, y_size - 1, 2, 100)
 
         tf = tifffile.TiffWriter("capture.tif")
         
@@ -529,8 +533,8 @@ if (__name__ == "__main__"):
                 [frames, shape] = cam.getFrames()
                 for k, frame in enumerate(frames):
                     print(k, frame.getData()[0:3])
-                    tf.save(frame.getData().reshape((x_size, y_size)))
-
+                    tf.save(frame.getData().reshape((shape[0], shape[1])))
+            print((shape[0], shape[1]))
             # Stop acquisition.
             print("Stopping camera.")
             cam.stopAcquisition()
@@ -539,7 +543,7 @@ if (__name__ == "__main__"):
             [frames, shape] = cam.getFrames()
             for j, frame in enumerate(frames):
                 print(j, frame.getData()[0:3])
-                tf.save(frame.getData().reshape((x_size, y_size)))
+                tf.save(frame.getData().reshape((int(x_size/2), int(y_size/2))))
 
         tf.close()
         
