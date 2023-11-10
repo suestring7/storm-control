@@ -119,6 +119,8 @@ class PVCAMCamera(object):
                                                  eof_callback,
                                                  ctypes.byref(self.n_captured)),
               "pl_cam_register_callback_ex3")
+        # Yuan: set the speed to 11bit faster mode 94.5fps, instead of 43.5fps
+        self.setParameter("param_spdtab_index", 0)
 
     def captureSetup(self, x_start, x_end, x_bin, y_start, y_end, y_bin, exposure_time):
         """
@@ -466,9 +468,9 @@ if (__name__ == "__main__"):
     cam = PVCAMCamera(camera_name = names[0])
 
     # Test getting some parameters.
-    if False:
+    if True:
         for param in ["param_temp", "param_pix_par_size", "param_shtr_status",
-                      "param_readout_time", "param_bit_depth", "param_chip_name"]:
+                      "param_readout_time", "param_bit_depth", "param_chip_name", "param_spdtab_index"]:
             print("Parameter: ", param)
             if cam.hasParameter(param):
                 print("  value = ", cam.getParameterCurrent(param))
@@ -491,14 +493,16 @@ if (__name__ == "__main__"):
                 cam.setParameter("param_spdtab_index", j)
                 for param in ["param_bit_depth", "param_pix_time", "param_gain_index"]:
                     print("      ", i, j, param, "=", cam.getParameterCurrent(param))
+                for param in ["param_gain_index"]:
+                    print("      ", i, j, param, " range:", cam.getParameter(param, pvc.ATTR_MIN)," to ", cam.getParameter(param, pvc.ATTR_MAX))
 
     # Test querying speed / bit depth.
-    if False:
+    if True:
         print("Number of speeds", cam.getParameterCount("param_spdtab_index"))
         print("Number bit depths", cam.getParameterCount("param_bit_depth"))
     
     # Test querying exposure.
-    if False:
+    if True:
         print(cam.getParameterCount("param_exp_res"), cam.getParameterCurrent("param_exp_res"))
         print(cam.getParameterCurrent("param_expose_out_mode"))
         print(cam.getParameterCurrent("param_metadata_enabled"))
