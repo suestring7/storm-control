@@ -48,6 +48,7 @@ class PhotometricsCameraControl(cameraControl.HWCameraControl):
         have_shutter = self.camera.hasParameter("param_shtr_status")
         have_temperature = self.camera.hasParameter("param_temp_setpoint")
         have_temperature = False
+
         
         self.camera_functionality = cameraFunctionality.CameraFunctionality(camera_name = self.camera_name,
                                                                             have_shutter = have_shutter,
@@ -62,11 +63,19 @@ class PhotometricsCameraControl(cameraControl.HWCameraControl):
                                                      value = self.camera.getParameterCurrent("param_spdtab_index"),
                                                      min_value = 0,
                                                      max_value = self.camera.getParameterCount("param_spdtab_index") - 1))
+        self.parameters.add(params.ParameterRangeInt(description = "Sensor gain index",
+                                                     name = "param_gain_index",
+                                                     value = self.camera.getParameterCurrent("param_gain_index"),
+                                                     min_value = 1,
+                                                     max_value = 3))
+        # Yuan: max_value would change as the speed change thus I just fixed it with the largest possible value...
+        # also, it's quite weird to have 1-base and 0-base in one system
 
         # Dictionary of the Photometrics camera properties we'll support.
         #
         self.pvcam_props = {"exposure_time" : True,
                             "param_spdtab_index" : True,
+                            "param_gain_index" : True,
                             "x_bin" : True,
                             "x_end" : True,
                             "x_start" : True,
@@ -109,13 +118,11 @@ class PhotometricsCameraControl(cameraControl.HWCameraControl):
         self.newParameters(self.parameters, initialization = True)
 
     def newParameters(self, parameters, initialization = False):
-        size_x = parameters.get("x_end") - parameters.get("x_start") + 1
-        size_y = parameters.get("y_end") - parameters.get("y_start") + 1
+        size_x = (parameters.get("x_end") - parameters.get("x_start") + 1)/parameters.get("x_bin")
+        size_y = (parameters.get("y_end") - parameters.get("y_start") + 1)/parameters.get("y_bin")
         parameters.setv("x_pixels", size_x)
         parameters.setv("y_pixels", size_y)
         parameters.setv("bytes_per_frame", 2 * size_x * size_y)
-
-        super().newParameters(parameters)
 
         self.camera_working = True
 
@@ -165,10 +172,15 @@ class PhotometricsCameraControl(cameraControl.HWCameraControl):
             #bit_depth = self.camera.getParameterCurrent("param_bit_depth")
             #self.parameters.setv("max_intensity", 2**bit_depth)
 
+            bit_depth = self.camera.getParameterCurrent("param_bit_depth")
+            self.parameters.setv("max_intensity", 2**bit_depth)
+
             if running:
                 self.startCamera()
                 
             self.camera_functionality.parametersChanged.emit()
+
+        super().newParameters(parameters)
 
     # FIXME: For short films we should configure for fixed length acquisition.
     #

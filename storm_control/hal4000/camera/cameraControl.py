@@ -282,13 +282,13 @@ class CameraControl(QtCore.QThread):
         #        so setting there range is not going to do anything. In
         #        the parameters editor they won't even be shown.
         #
-        max_x = self.parameters.get("x_chip") / parameters.get("x_bin")
-        for attr in ["x_start", "x_end"]:
-            self.parameters.getp(attr).setMaximum(max_x)
+        # max_x = self.parameters.get("x_chip") / parameters.get("x_bin")
+        # for attr in ["x_start", "x_end"]:
+        #     self.parameters.getp(attr).setMaximum(max_x)
 
-        max_y = self.parameters.get("y_chip") / parameters.get("y_bin")
-        for attr in ["y_start", "y_end"]:
-            self.parameters.getp(attr).setMaximum(max_y)
+        # max_y = self.parameters.get("y_chip") / parameters.get("y_bin")
+        # for attr in ["y_start", "y_end"]:
+        #     self.parameters.getp(attr).setMaximum(max_y)
 
         # Update parameters that are also used for the display.
         for pname in ["x_bin", "x_pixels", "x_start", "y_bin", "y_pixels", "y_start"]:

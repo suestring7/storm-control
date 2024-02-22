@@ -2,7 +2,7 @@
 <config>
 
   <!-- The starting directory. -->
-  <directory type="directory">D:/default/</directory>
+  <directory type="directory">G:/default/</directory>
   
   <!-- The setup name -->
   <setup_name type="string">test</setup_name>
@@ -258,7 +258,7 @@
       <class_name type="string">CoherentObis</class_name>
       <!-- TODO: 405 COM -->
       <configuration>
-        <port type="string">COM28</port>
+        <port type="string">COM4</port>
         <used_during_filming type="boolean">True</used_during_filming>
         <maximum type="int">10000</maximum>
       </configuration>
