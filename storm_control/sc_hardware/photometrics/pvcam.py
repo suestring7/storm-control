@@ -150,7 +150,6 @@ class PVCAMCamera(object):
 
         # self.frame_bytes = (x_end - x_start + 1)*(y_end - y_start + 1)*2
         # Store frame size in bytes.
-        # Yuan Tao
         self.frame_bytes = frame_size.value
         print(self.frame_bytes)
 

@@ -219,7 +219,6 @@ class LockedMixin(object):
                 diff = (qpd_state["offset"] - self.lm_target)
                 if (abs(diff) < self.lm_offset_threshold):
                     self.lm_buffer[self.lm_counter] = 1
-                    print(self.lm_counter)  # YT:
                 else:
                     self.lm_buffer[self.lm_counter] = 0
 

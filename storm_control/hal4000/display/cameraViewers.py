@@ -148,9 +148,9 @@ class ClassicViewer(QtCore.QObject, CameraParamsMixin):
         be in self.frame_viewer or self.params_viewer. 
         """
         for view in [self.frame_viewer, self.params_viewer]:
-            print("cameraView", view)
+            #print("cameraView", view)
             if view is not None:
-                print(view)
+                #print(view)
                 m_child = view.findChild(qt_type, name, options)
                 if m_child is not None:
                     return m_child

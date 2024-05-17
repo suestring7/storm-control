@@ -809,8 +809,6 @@ class AndorCamera:
     def setEMCCDGain(self, gain):
         setCurrentCamera(self.camera_handle)
         self._abortIfAcquiring_()
-        #Yuan: test
-        #print(ctypes.c_int(gain))
         low = ctypes.c_int()
         high = ctypes.c_int()
         andor.GetEMGainRange(ctypes.byref(low), ctypes.byref(high))

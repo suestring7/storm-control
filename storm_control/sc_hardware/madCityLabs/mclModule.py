@@ -31,9 +31,7 @@ class MCLZStage(stageZModule.ZStage):
     """
     def __init__(self, **kwds):
         super().__init__(**kwds)
-        print(" Here?")
         serial_number = self.configuration.get("serial_number", 0)
-        print("And here?")
         if (serial_number == 0):
             serial_number = None
         self.z_stage = mclController.MCLStage(mcl_lib = self.configuration.get("mcl_lib"),
