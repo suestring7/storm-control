@@ -4,9 +4,6 @@ HAL module for controlling a Marzhauser stage.
 
 Hazen 04/17
 """
-import re
-import time
-import math
 
 from PyQt5 import QtCore
 
@@ -15,6 +12,8 @@ import storm_control.hal4000.halLib.halMessage as halMessage
 import storm_control.sc_hardware.baseClasses.stageModule as stageModule
 import storm_control.sc_hardware.marzhauser.marzhauser as marzhauser
 
+import math
+import time
 
 class MarzhauserStageFunctionality(stageModule.StageFunctionality):
     """
@@ -30,7 +29,10 @@ class MarzhauserStageFunctionality(stageModule.StageFunctionality):
         # current position.
         self.updateTimer = QtCore.QTimer()
         self.updateTimer.setInterval(update_interval)
+<<<<<<< HEAD
         #self.updateTimer.setSingleShot(True)
+=======
+>>>>>>> upstream/master
         self.updateTimer.timeout.connect(self.handleUpdateTimer)
         self.updateTimer.start()
 
@@ -47,9 +49,32 @@ class MarzhauserStageFunctionality(stageModule.StageFunctionality):
                                                       stage_position_signal = self.stagePosition)
         self.polling_thread.startPolling()
 
+<<<<<<< HEAD
+    def goAbsolute(self, x, y):
+        #
+        # Debugging all removal of stage position queries.
+        #
+        super().goAbsolute(x,y)
+        self.pos_dict["x"] = x
+        self.pos_dict["y"] = y
+        self.stagePosition.emit(self.pos_dict)
+
+    def goRelative(self, x, y):
+        # Fixed the not show relative move problem
+        super().goRelative(x,y)
+        self.pos_dict["x"] += x
+        self.pos_dict["y"] += y
+        self.stagePosition.emit(self.pos_dict)
+
+    def handleStagePosition(self, pos_dict):
+        self.pos_dict = pos_dict
+        #self.querying = False
+        #print("handleStagePosition")
+=======
     def handleStagePosition(self, pos_dict):
         self.pos_dict = pos_dict
         self.querying = False
+>>>>>>> upstream/master
 
     def handleUpdateTimer(self):
         """
@@ -60,9 +85,17 @@ class MarzhauserStageFunctionality(stageModule.StageFunctionality):
         # position update requests. If there is already one in process there
         # is no point in starting another one.
         #
+<<<<<<< HEAD
+        # if not self.querying:
+        #     self.querying = True
+        #     self.mustRun(task = self.stage.position)
+        self.maybeRun(task = self.stage.position)
+        #print("handleUpdateTimer")
+=======
         if not self.querying:
             self.querying = True
             self.mustRun(task = self.stage.position)
+>>>>>>> upstream/master
 
     def wait(self):
         self.updateTimer.stop()
