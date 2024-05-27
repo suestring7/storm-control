@@ -1,4 +1,4 @@
-
+set username=yxt5273
 set CONDAPATH=C:\Users\%username%\.conda
 rem Define here the name of the environment
 set ENVNAME=storm
